@@ -56,10 +56,16 @@ def page_index():
           </div>
         </div>
         <div class="hero-media">
-          <div class="frame"><img src="images/photos/hero-bain-luxe.jpg" alt="Salle de bain haut de gamme r&eacute;nov&eacute;e par Active Plomberie" style="width:100%; height:100%; object-fit:cover; aspect-ratio:4/3; display:block;"></div>
-          <div class="hero-badge">
-            <span class="icon-wrap">{pin}</span>
-            <div><span class="num">{radius}</span><br><span class="label">autour de {city}<br>et alentours</span></div>
+          <div class="frame"><img src="images/photos/hero-bain-luxe.jpg" alt="Douche italienne r&eacute;nov&eacute;e par Active Plomberie, ambiance gris anthracite" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div class="hero-badges">
+            <div class="hero-badge">
+              <span class="icon-wrap">{pin}</span>
+              <div><span class="num">{radius}</span><br><span class="label">autour de {city}<br>et alentours</span></div>
+            </div>
+            <div class="hero-badge">
+              {google}
+              <div><span class="num">{rating}/5</span><br><span class="label">sur Google &middot; {reviews} avis clients</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -150,6 +156,7 @@ def page_index():
         radius=BIZ["radius"], services_cards=services_cards, arrow=icon("icon-arrow.svg"),
         gallery_pairs=gallery_pairs, stars_sm=stars(), check=icon("icon-check-green.svg"),
         shield=icon("icon-shield.svg"), testi_cards=testi_cards,
+        google=icon("icon-google-blue.svg", "icon"),
     )
 
     main += build_cta_banner()
