@@ -249,6 +249,8 @@ section{ padding:74px 0; }
 .about-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:52px; align-items:center; }
 .about-media{ position:relative; }
 .about-media .van-card{ background:linear-gradient(135deg,var(--primary-light),#fff); border-radius:var(--radius-lg); padding:26px; border:1px solid var(--line); }
+.about-media .photo-frame{ border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lg); }
+.about-media .photo-frame img{ width:100%; height:100%; object-fit:cover; aspect-ratio:4/3; display:block; }
 .about-badge{ position:absolute; left:-16px; bottom:-16px; background:#fff; box-shadow:var(--shadow); border-radius:var(--radius); padding:12px 16px; display:flex; align-items:center; gap:10px; }
 .about-badge .stars{ color:var(--star); display:flex; gap:1px; }
 .about-badge .stars .icon{ width:13px; height:13px; }

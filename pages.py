@@ -99,7 +99,7 @@ def page_index():
     <section>
       <div class="container about-grid">
         <div class="about-media">
-          <div class="van-card"><img src="images/van-illustration.svg" alt="Camionnette Active Plomberie"></div>
+          <div class="photo-frame"><img src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74 devant son v&eacute;hicule de service" loading="lazy"></div>
           <div class="about-badge">
             {stars_sm}
             <div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div>
@@ -370,7 +370,7 @@ def page_apropos():
     <section>
       <div class="container about-grid">
         <div class="about-media">
-          <div class="van-card"><img src="images/van-illustration.svg" alt="Camionnette Active Plomberie"></div>
+          <div class="photo-frame"><img src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74 devant son v&eacute;hicule de service" loading="lazy"></div>
           <div class="about-badge">{stars}<div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div></div>
         </div>
         <div>
