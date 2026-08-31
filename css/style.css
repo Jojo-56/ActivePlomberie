@@ -112,6 +112,12 @@ input,textarea,select{ font-family:inherit; font-size:1rem; }
 .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.15rem; color:var(--navy); }
 .brand img{ width:38px; height:38px; }
 .brand small{ display:block; font-weight:600; font-size:.6rem; letter-spacing:.08em; color:var(--primary); text-transform:uppercase; }
+.brand-photo .brand-logo{ width:auto; height:46px; }
+.brand-photo .brand-tagline-only{ display:none; }
+@media (min-width:560px){
+  .brand-photo .brand-tagline-only{ display:block; padding-left:2px; border-left:2px solid rgba(29,111,224,.25); }
+}
+.footer-brand .brand-photo .brand-logo{ height:52px; }
 
 .nav-links{ display:flex; align-items:center; gap:4px; }
 .nav-links > li{ position:relative; }
@@ -219,6 +225,19 @@ section{ padding:74px 0; }
 .gallery-pair .cap-body{ padding:14px 16px; }
 .gallery-pair .cap-body strong{ display:block; color:var(--navy); font-size:.92rem; margin-bottom:2px; }
 .gallery-pair .cap-body span{ color:var(--muted); font-size:.8rem; }
+.gallery-pair .imgs-single{ display:block; }
+.gallery-pair .imgs-single figure{ aspect-ratio:4/3; }
+.gallery-pair .tag{ position:absolute; top:10px; z-index:2; background:rgba(11,31,58,.82); color:#fff; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; padding:4px 12px; border-radius:999px; }
+.gallery-pair .tag-avant{ left:12px; }
+.gallery-pair .tag-apres{ right:12px; left:auto; background:var(--primary); }
+.realisation-feature{ background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lg); margin-bottom:36px; }
+.realisation-feature figure{ margin:0; position:relative; aspect-ratio:16/8; overflow:hidden; }
+.realisation-feature figure img{ width:100%; height:100%; object-fit:cover; display:block; }
+.realisation-feature .cap-body{ padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.realisation-feature .cap-body h3{ font-size:1.1rem; font-weight:800; color:var(--navy); margin-bottom:4px; }
+.realisation-feature .cap-body p{ color:var(--muted); font-size:.88rem; margin:0; }
+.service-photo{ border-radius:var(--radius-lg); overflow:hidden; margin:24px 0; box-shadow:var(--shadow-lg); }
+.service-photo img{ width:100%; display:block; aspect-ratio:16/10; object-fit:cover; }
 .gallery-nav{ display:flex; justify-content:flex-end; gap:10px; margin-bottom:18px; }
 .gallery-nav button{ width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:#fff; display:flex; align-items:center; justify-content:center; color:var(--navy); transition:background .15s ease,color .15s ease,border-color .15s ease; }
 .gallery-nav button:hover{ background:var(--primary); border-color:var(--primary); color:#fff; }

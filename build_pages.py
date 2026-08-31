@@ -15,6 +15,7 @@ SERVICES = DATA["services"]
 TESTIMONIALS = DATA["testimonials"]
 AVATAR_COLORS = DATA["avatar_colors"]
 REALISATIONS = DATA["realisations"]
+REALISATIONS_GALERIE = DATA["realisations_galerie"]
 
 CURRENT_YEAR = 2026
 
@@ -32,6 +33,31 @@ def service_by_slug(slug):
         if s["slug"] == slug:
             return s
     return None
+
+# -----------------------------------------------------------------
+# Cartes photos réelles (réalisations)
+# -----------------------------------------------------------------
+def photo_card_before_after(image, title, subtitle):
+    return """<div class="gallery-pair">
+      <div class="imgs imgs-single">
+        <figure style="aspect-ratio:16/8;">
+          <span class="tag tag-avant">Avant</span>
+          <span class="tag tag-apres">Apr&egrave;s</span>
+          <img src="images/photos/{image}" alt="{title} &ndash; avant / apr&egrave;s" loading="lazy" style="object-position:center;">
+        </figure>
+      </div>
+      <div class="cap-body"><strong>{title}</strong><span>{subtitle}</span></div>
+    </div>""".format(image=image, title=title, subtitle=subtitle)
+
+def photo_card_single(image, title, subtitle):
+    return """<div class="gallery-pair">
+      <div class="imgs imgs-single">
+        <figure>
+          <img src="images/photos/{image}" alt="{title}" loading="lazy">
+        </figure>
+      </div>
+      <div class="cap-body"><strong>{title}</strong><span>{subtitle}</span></div>
+    </div>""".format(image=image, title=title, subtitle=subtitle)
 
 # -----------------------------------------------------------------
 # HEAD
@@ -66,7 +92,7 @@ def local_business_schema():
         "@context": "https://schema.org",
         "@type": "Plumber",
         "name": BIZ["legal"],
-        "image": BIZ["domain"] + "/images/logo.svg",
+        "image": BIZ["domain"] + "/images/logo-real-transparent.png",
         "telephone": BIZ["phone_href"].replace("tel:", ""),
         "email": BIZ["email"],
         "url": BIZ["domain"],
@@ -148,9 +174,9 @@ def build_header(active, active_service=None):
     return """<header class="site-header">
   <div class="nav-overlay"></div>
     <div class="container nav">
-      <a href="index.html" class="brand">
+      <a href="index.html" class="brand brand-photo">
         {logo}
-        <span>{name}<small>Plombier &middot; Chauffagiste &middot; Thyez</small></span>
+        <span class="brand-tagline-only"><small>Plombier &middot; Chauffagiste &middot; Thyez</small></span>
       </a>
       <ul class="nav-links">{nav}</ul>
       <div class="nav-cta">
@@ -162,7 +188,7 @@ def build_header(active, active_service=None):
       </div>
     </div>
   </header>
-""".format(logo='<img src="images/logo.svg" alt="Logo {name}" width="38" height="38">'.format(name=BIZ["name"]),
+""".format(logo='<img src="images/logo-real-transparent.png" alt="Logo {name}" class="brand-logo">'.format(name=BIZ["name"]),
            name=BIZ["name"], nav=nav_html, phone_href=BIZ["phone_href"],
            phone_icon=icon("icon-phone.svg"), phone=BIZ["phone_display"],
            menu_icon=icon("icon-menu.svg"))
@@ -181,9 +207,8 @@ def build_footer():
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="brand">
-            <img src="images/logo.svg" alt="Logo {name}" width="38" height="38">
-            <span>{name}</span>
+          <a href="index.html" class="brand brand-photo">
+            <img src="images/logo-real-transparent.png" alt="Logo {name}" class="brand-logo">
           </a>
           <p>Plombier chauffagiste &agrave; {city} &mdash; Plomberie, chauffage, sanitaire. D&eacute;pannage, installation et r&eacute;novation en Haute-Savoie.</p>
           <div class="social-row">

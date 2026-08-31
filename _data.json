@@ -203,23 +203,69 @@
   "realisations": [
     {
       "title": "Rénovation salle de bain complète",
-      "city": "Cluses",
-      "icon": "icon-bathtub.svg"
+      "city": "Haute-Savoie",
+      "icon": "icon-bathtub.svg",
+      "photo": "avant-apres-salle-de-bain.webp",
+      "before_after": true
     },
     {
       "title": "Remplacement chauffe-eau",
-      "city": "Marignier",
-      "icon": "icon-water-heater.svg"
+      "city": "Haute-Savoie",
+      "icon": "icon-water-heater.svg",
+      "photo": "chauffe-eau-installation.jpg",
+      "before_after": false
     },
     {
       "title": "Installation de chaudière",
-      "city": "Bonneville",
-      "icon": "icon-radiator.svg"
+      "city": "Haute-Savoie",
+      "icon": "icon-radiator.svg",
+      "photo": "chaudiere-installation.jpg",
+      "before_after": false
     },
     {
       "title": "Dépannage fuite d'eau",
-      "city": "Thyez",
-      "icon": "icon-droplet.svg"
+      "city": "Haute-Savoie",
+      "icon": "icon-droplet.svg",
+      "photo": "reparation-robinet.jpg",
+      "before_after": false
+    }
+  ],
+  "realisations_galerie": [
+    {
+      "title": "Double vasque sur mesure",
+      "photo": "bain-double-vasque-1.jpg"
+    },
+    {
+      "title": "Douche à l'italienne, finitions dorées",
+      "photo": "douche-luxe-dore.jpg"
+    },
+    {
+      "title": "Douche vitrée, faïence grise",
+      "photo": "douche-finie-1.webp"
+    },
+    {
+      "title": "Rénovation salle d'eau complète",
+      "photo": "bain-baignoire-1.jpg"
+    },
+    {
+      "title": "Douche à l'italienne",
+      "photo": "douche-finie-2.webp"
+    },
+    {
+      "title": "Faïence bleu nuit",
+      "photo": "douche-bleue.jpg"
+    },
+    {
+      "title": "WC suspendu, finitions soignées",
+      "photo": "toilette-finie.jpg"
+    },
+    {
+      "title": "Distribution chauffage en cuivre",
+      "photo": "distribution-cuivre.jpg"
+    },
+    {
+      "title": "Plancher chauffant",
+      "photo": "chauffage-sol.jpg"
     }
   ]
 }

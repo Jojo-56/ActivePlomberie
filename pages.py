@@ -17,22 +17,10 @@ def page_index():
 
     gallery_pairs = ""
     for r in REALISATIONS:
-        gallery_pairs += """<div class="gallery-pair">
-          <div class="imgs">
-            <figure style="background:#eef1f5; display:flex; align-items:center; justify-content:center;">
-              <figcaption>Avant</figcaption>
-              <img src="images/{icon}" alt="" style="width:34%; opacity:.35;">
-            </figure>
-            <figure style="background:linear-gradient(135deg,#1d6fe0,#0f4fb0); display:flex; align-items:center; justify-content:center;">
-              <figcaption>Apr&egrave;s</figcaption>
-              <img src="images/{icon}" alt="" style="width:34%; filter:brightness(0) invert(1);">
-            </figure>
-          </div>
-          <div class="cap-body">
-            <strong>{title}</strong>
-            <span>{city}</span>
-          </div>
-        </div>""".format(icon=r["icon"], title=r["title"], city=r["city"])
+        if r.get("before_after"):
+            gallery_pairs += photo_card_before_after(r["photo"], r["title"], r["city"])
+        else:
+            gallery_pairs += photo_card_single(r["photo"], r["title"], r["city"])
 
     testi_cards = ""
     for i, t in enumerate(TESTIMONIALS):
@@ -68,7 +56,7 @@ def page_index():
           </div>
         </div>
         <div class="hero-media">
-          <div class="frame"><img src="images/hero-illustration.svg" alt="Illustration salle de bain moderne r&eacute;nov&eacute;e par Active Plomberie"></div>
+          <div class="frame"><img src="images/photos/hero-bain-luxe.jpg" alt="Salle de bain haut de gamme r&eacute;nov&eacute;e par Active Plomberie" style="width:100%; height:100%; object-fit:cover; aspect-ratio:4/3; display:block;"></div>
           <div class="hero-badge">
             <span class="icon-wrap">{pin}</span>
             <div><span class="num">{radius}</span><br><span class="label">autour de {city}<br>et alentours</span></div>
@@ -208,6 +196,13 @@ def page_nos_services():
 # =================================================================
 # PAGE DE SERVICE (détail)
 # =================================================================
+SERVICE_PHOTOS = {
+    "depannage-plomberie": ("reparation-robinet.jpg", "Intervention de d&eacute;pannage plomberie par Active Plomberie 74"),
+    "chauffage": ("distribution-cuivre.jpg", "Installation de distribution de chauffage par Active Plomberie 74"),
+    "chauffe-eau": ("chauffe-eau-installation.jpg", "Installation d'un chauffe-eau par Active Plomberie 74"),
+    "salle-de-bain": ("bain-double-vasque-1.jpg", "R&eacute;novation de salle de bain par Active Plomberie 74"),
+}
+
 def page_service(s):
     items_html = ""
     for t, d in s["items"]:
@@ -242,6 +237,7 @@ def page_service(s):
           <span class="eyebrow">Ce que nous proposons</span>
           <h2 style="font-size:1.7rem; font-weight:800; color:var(--navy); margin:10px 0 4px;">{title}</h2>
           <p style="color:var(--muted); margin-top:10px;">{lead}</p>
+          <div class="service-photo"><img src="images/photos/{photo}" alt="{photo_alt}" loading="lazy"></div>
           <ul class="detail-list">{items}</ul>
 
           <span class="eyebrow">Questions fr&eacute;quentes</span>
@@ -260,6 +256,7 @@ def page_service(s):
       </div>
     </section>
     """.format(title=s["title"], lead=s["hero_lead"], items=items_html, faq=faq_html,
+               photo=SERVICE_PHOTOS[s["slug"]][0], photo_alt=SERVICE_PHOTOS[s["slug"]][1],
                sidebar_links=sidebar_links, phone_href=BIZ["phone_href"], phone=BIZ["phone_display"])
     main += build_cta_banner()
 
@@ -283,36 +280,31 @@ def page_service(s):
 # =================================================================
 def page_realisations():
     cards = ""
-    extra = REALISATIONS + [
-        {"title": "Rénovation complète sanitaires", "city": "Sallanches", "icon": "icon-droplet.svg"},
-        {"title": "Installation douche italienne", "city": "Annemasse", "icon": "icon-bathtub.svg"},
-    ]
-    for r in extra:
-        cards += """<div class="gallery-pair">
-          <div class="imgs">
-            <figure style="background:#eef1f5; display:flex; align-items:center; justify-content:center;">
-              <figcaption>Avant</figcaption>
-              <img src="images/{icon}" alt="" style="width:34%; opacity:.35;">
-            </figure>
-            <figure style="background:linear-gradient(135deg,#1d6fe0,#0f4fb0); display:flex; align-items:center; justify-content:center;">
-              <figcaption>Apr&egrave;s</figcaption>
-              <img src="images/{icon}" alt="" style="width:34%; filter:brightness(0) invert(1);">
-            </figure>
-          </div>
-          <div class="cap-body"><strong>{title}</strong><span>{city}</span></div>
-        </div>""".format(icon=r["icon"], title=r["title"], city=r["city"])
+    for r in REALISATIONS_GALERIE:
+        cards += photo_card_single(r["photo"], r["title"], "Active Plomberie 74")
 
     main = build_page_header(
-        "Nos réalisations", "Un aperçu représentatif de nos interventions récentes en plomberie, chauffage et rénovation de salle de bain en Haute-Savoie.",
+        "Nos réalisations", "Un aperçu de nos chantiers récents en plomberie, chauffage et rénovation de salle de bain en Haute-Savoie — toutes les photos ci-dessous sont issues de nos interventions réelles.",
         [("Accueil", "index.html"), ("Réalisations", None)]
     ) + """
     <section>
       <div class="container">
+        <div class="realisation-feature">
+          <figure>
+            <img src="images/photos/avant-apres-salle-de-bain.webp" alt="R&eacute;novation de salle de bain, avant et apr&egrave;s" loading="lazy">
+          </figure>
+          <div class="cap-body">
+            <div>
+              <h3>R&eacute;novation compl&egrave;te de salle de bain</h3>
+              <p>D'une salle de bain vétuste &agrave; un espace moderne enti&egrave;rement r&eacute;nov&eacute; &mdash; d&eacute;molition, plomberie, faïence et finitions.</p>
+            </div>
+            <a class="btn btn-primary" href="salle-de-bain.html">Voir le service {arrow}</a>
+          </div>
+        </div>
         <div class="services-grid" style="grid-template-columns:repeat(3,1fr); gap:20px;">{cards}</div>
-        <p style="color:var(--muted); font-size:.85rem; margin-top:26px; text-align:center;">Illustrations repr&eacute;sentatives de nos types d'intervention. Photos de chantiers r&eacute;els disponibles sur demande.</p>
       </div>
     </section>
-    """.format(cards=cards) + build_cta_banner()
+    """.format(cards=cards, arrow=icon("icon-arrow-white.svg")) + build_cta_banner()
 
     return wrap_page(
         title="Nos réalisations | Active Plomberie 74",

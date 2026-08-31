@@ -119,10 +119,26 @@ TESTIMONIALS = [
 AVATAR_COLORS = ["#1d6fe0", "#0f4fb0", "#3f8cff"]
 
 REALISATIONS = [
-    {"title": "Rénovation salle de bain complète", "city": "Cluses", "icon": "icon-bathtub.svg"},
-    {"title": "Remplacement chauffe-eau", "city": "Marignier", "icon": "icon-water-heater.svg"},
-    {"title": "Installation de chaudière", "city": "Bonneville", "icon": "icon-radiator.svg"},
-    {"title": "Dépannage fuite d'eau", "city": "Thyez", "icon": "icon-droplet.svg"},
+    {"title": "Rénovation salle de bain complète", "city": "Haute-Savoie", "icon": "icon-bathtub.svg",
+     "photo": "avant-apres-salle-de-bain.webp", "before_after": True},
+    {"title": "Remplacement chauffe-eau", "city": "Haute-Savoie", "icon": "icon-water-heater.svg",
+     "photo": "chauffe-eau-installation.jpg", "before_after": False},
+    {"title": "Installation de chaudière", "city": "Haute-Savoie", "icon": "icon-radiator.svg",
+     "photo": "chaudiere-installation.jpg", "before_after": False},
+    {"title": "Dépannage fuite d'eau", "city": "Haute-Savoie", "icon": "icon-droplet.svg",
+     "photo": "reparation-robinet.jpg", "before_after": False},
+]
+
+REALISATIONS_GALERIE = [
+    {"title": "Double vasque sur mesure", "photo": "bain-double-vasque-1.jpg"},
+    {"title": "Douche à l'italienne, finitions dorées", "photo": "douche-luxe-dore.jpg"},
+    {"title": "Douche vitrée, faïence grise", "photo": "douche-finie-1.webp"},
+    {"title": "Rénovation salle d'eau complète", "photo": "bain-baignoire-1.jpg"},
+    {"title": "Douche à l'italienne", "photo": "douche-finie-2.webp"},
+    {"title": "Faïence bleu nuit", "photo": "douche-bleue.jpg"},
+    {"title": "WC suspendu, finitions soignées", "photo": "toilette-finie.jpg"},
+    {"title": "Distribution chauffage en cuivre", "photo": "distribution-cuivre.jpg"},
+    {"title": "Plancher chauffant", "photo": "chauffage-sol.jpg"},
 ]
 
 print("Données chargées. Voir build_pages.py pour la génération HTML.")
@@ -130,4 +146,5 @@ print("Données chargées. Voir build_pages.py pour la génération HTML.")
 with open(os.path.join(ROOT, "_data.json"), "w", encoding="utf-8") as f:
     json.dump({"biz": BIZ, "communes": COMMUNES, "services": SERVICES,
                "testimonials": TESTIMONIALS, "avatar_colors": AVATAR_COLORS,
-               "realisations": REALISATIONS}, f, ensure_ascii=False, indent=2)
+               "realisations": REALISATIONS, "realisations_galerie": REALISATIONS_GALERIE},
+              f, ensure_ascii=False, indent=2)
