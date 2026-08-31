@@ -1,0 +1,133 @@
+# -*- coding: utf-8 -*-
+"""
+Générateur statique du site Active Plomberie 74.
+Exécuter avec: python3 build.py
+"""
+import os, json
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# ---------------------------------------------------------------
+# Données de l'entreprise
+# ---------------------------------------------------------------
+BIZ = {
+    "name": "Active Plomberie",
+    "legal": "Active Plomberie 74",
+    "phone_display": "06 51 41 06 29",
+    "phone_href": "tel:+33651410629",
+    "email": "contact@active-plomberie74.fr",
+    "address_line": "320 rue des Sorbiers",
+    "address_zip": "74300 Thyez",
+    "city": "Thyez",
+    "radius": "40 km",
+    "rating": "4.9",
+    "reviews": "49",
+    "domain": "https://www.active-plomberie74.fr",
+}
+
+COMMUNES = ["Thyez", "Cluses", "Scionzier", "Marignier", "Bonneville", "Sallanches",
+            "La Roche-sur-Foron", "Annemasse", "Marnaz", "Vougy"]
+
+SERVICES = [
+    {
+        "slug": "depannage-plomberie", "icon": "icon-droplet.svg",
+        "title": "Dépannage plomberie",
+        "short": "Fuite d'eau, canalisation bouchée, chasse d'eau, urgence 7j/7 et 24h/24.",
+        "hero_lead": "Fuite d'eau, canalisation bouchée, WC en panne... nos plombiers interviennent rapidement à Thyez et dans toute la Haute-Savoie, 7j/7 et 24h/24.",
+        "items": [
+            ("Recherche et réparation de fuite", "Détection précise et réparation sans dégât inutile."),
+            ("Débouchage de canalisation", "Évier, douche, WC : intervention rapide et efficace."),
+            ("Réparation de robinetterie", "Mitigeurs, joints, chasses d'eau qui fuient."),
+            ("Dépannage WC et chasse d'eau", "Remise en état ou remplacement le jour même si besoin."),
+        ],
+        "faq": [
+            ("Intervenez-vous en urgence le week-end et la nuit ?",
+             "Oui, notre service de dépannage est disponible 7j/7 et 24h/24, y compris les week-ends et jours fériés, pour toute urgence plomberie."),
+            ("Quel est le délai d'intervention moyen ?",
+             "Pour une urgence (fuite, dégât des eaux), nous intervenons le plus rapidement possible, généralement dans l'heure selon votre secteur."),
+            ("Le devis est-il vraiment gratuit et sans engagement ?",
+             "Oui, chaque devis est établi gratuitement et sans engagement de votre part, avant le début des travaux."),
+        ],
+    },
+    {
+        "slug": "chauffage", "icon": "icon-radiator.svg",
+        "title": "Chauffage",
+        "short": "Installation, entretien et dépannage de vos systèmes de chauffage.",
+        "hero_lead": "De l'installation d'une nouvelle chaudière à l'entretien annuel, nous assurons le bon fonctionnement de votre système de chauffage toute l'année.",
+        "items": [
+            ("Installation de chaudière", "Chaudière gaz, électrique ou à condensation, conseils adaptés à votre logement."),
+            ("Entretien annuel", "Contrôle et nettoyage pour un chauffage performant et sécurisé."),
+            ("Dépannage panne de chauffage", "Diagnostic rapide en cas de panne, même en hiver."),
+            ("Remplacement de radiateurs", "Radiateurs eau chaude, sèche-serviettes, équilibrage du réseau."),
+        ],
+        "faq": [
+            ("L'entretien annuel de chaudière est-il obligatoire ?",
+             "Oui, l'entretien annuel est une obligation légale pour la plupart des chaudières. Il garantit aussi votre sécurité et réduit votre consommation."),
+            ("Quels types de chauffage installez-vous ?",
+             "Nous installons et entretenons les chaudières gaz, électriques et à condensation, ainsi que les radiateurs eau chaude et sèche-serviettes."),
+            ("Que faire en cas de panne de chauffage en hiver ?",
+             "Contactez-nous directement au 06 51 41 06 29 : nous intervenons rapidement pour un diagnostic et une remise en route."),
+        ],
+    },
+    {
+        "slug": "chauffe-eau", "icon": "icon-water-heater.svg",
+        "title": "Chauffe-eau",
+        "short": "Installation, remplacement et entretien de chauffe-eau électrique ou thermodynamique.",
+        "hero_lead": "Plus d'eau chaude ou chauffe-eau vieillissant ? Nous installons, remplaçons et entretenons tous types de chauffe-eau.",
+        "items": [
+            ("Chauffe-eau électrique", "Installation et remplacement, tous volumes, toutes marques."),
+            ("Chauffe-eau thermodynamique", "Solution économique et écologique, éligible aux aides."),
+            ("Détartrage et entretien", "Pour prolonger la durée de vie de votre appareil."),
+            ("Dépannage panne d'eau chaude", "Diagnostic rapide en cas de panne ou de fuite."),
+        ],
+        "faq": [
+            ("Quelle est la durée de vie moyenne d'un chauffe-eau ?",
+             "En moyenne 10 à 15 ans, selon l'entretien et la qualité de l'eau. Un détartrage régulier prolonge sa durée de vie."),
+            ("Chauffe-eau électrique ou thermodynamique, lequel choisir ?",
+             "Le thermodynamique consomme moins d'électricité et convient bien en remplacement, mais nécessite un local suffisamment ventilé. Nous vous conseillons selon votre logement."),
+        ],
+    },
+    {
+        "slug": "salle-de-bain", "icon": "icon-bathtub.svg",
+        "title": "Salle de bain",
+        "short": "Rénovation complète de salle de bain, sanitaires et robinetterie.",
+        "hero_lead": "De la conception à la pose, nous accompagnons votre projet de rénovation de salle de bain, clé en main.",
+        "items": [
+            ("Conception et devis personnalisé", "Un projet adapté à votre espace et à votre budget."),
+            ("Douche à l'italienne", "Création sur-mesure, étanchéité garantie."),
+            ("Remplacement baignoire ou douche", "Dépose de l'ancien équipement et pose du nouveau."),
+            ("Robinetterie et sanitaires", "Vasques, WC, meubles et accessoires."),
+        ],
+        "faq": [
+            ("Combien de temps dure une rénovation de salle de bain ?",
+             "Comptez en moyenne 1 à 2 semaines pour une rénovation complète, selon l'ampleur des travaux. Un planning précis vous est communiqué avec le devis."),
+            ("Proposez-vous un accompagnement pour le choix des matériaux ?",
+             "Oui, nous vous conseillons sur le choix des matériaux et équipements en fonction de votre budget et de vos goûts."),
+        ],
+    },
+]
+
+TESTIMONIALS = [
+    {"name": "Julien D.", "city": "Scionzier", "initials": "JD",
+     "text": "Intervention rapide pour une fuite d'eau. Travail propre et efficace. Je recommande vivement !"},
+    {"name": "Sophie M.", "city": "Cluses", "initials": "SM",
+     "text": "Rénovation complète de notre salle de bain, résultat parfait et équipe très professionnelle."},
+    {"name": "Marc P.", "city": "Bonneville", "initials": "MP",
+     "text": "Artisan sérieux, à l'écoute et de très bon conseil. Tarifs justes."},
+]
+
+AVATAR_COLORS = ["#1d6fe0", "#0f4fb0", "#3f8cff"]
+
+REALISATIONS = [
+    {"title": "Rénovation salle de bain complète", "city": "Cluses", "icon": "icon-bathtub.svg"},
+    {"title": "Remplacement chauffe-eau", "city": "Marignier", "icon": "icon-water-heater.svg"},
+    {"title": "Installation de chaudière", "city": "Bonneville", "icon": "icon-radiator.svg"},
+    {"title": "Dépannage fuite d'eau", "city": "Thyez", "icon": "icon-droplet.svg"},
+]
+
+print("Données chargées. Voir build_pages.py pour la génération HTML.")
+
+with open(os.path.join(ROOT, "_data.json"), "w", encoding="utf-8") as f:
+    json.dump({"biz": BIZ, "communes": COMMUNES, "services": SERVICES,
+               "testimonials": TESTIMONIALS, "avatar_colors": AVATAR_COLORS,
+               "realisations": REALISATIONS}, f, ensure_ascii=False, indent=2)

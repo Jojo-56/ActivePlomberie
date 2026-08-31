@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.active-plomberie74.fr/sitemap.xml
