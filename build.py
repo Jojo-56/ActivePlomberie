@@ -13,8 +13,8 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 BIZ = {
     "name": "Active Plomberie",
     "legal": "Active Plomberie 74",
-    "phone_display": "06 51 41 06 29",
-    "phone_href": "tel:+33651410629",
+    "phone_display": "06 04 67 09 43",
+    "phone_href": "tel:+33604670943",
     "email": "contact@active-plomberie74.fr",
     "address_line": "320 rue des Sorbiers",
     "address_zip": "74300 Thyez",
@@ -66,7 +66,7 @@ SERVICES = [
             ("Quels types de chauffage installez-vous ?",
              "Nous installons et entretenons les chaudières gaz, électriques et à condensation, ainsi que les radiateurs eau chaude et sèche-serviettes."),
             ("Que faire en cas de panne de chauffage en hiver ?",
-             "Contactez-nous directement au 06 51 41 06 29 : nous intervenons rapidement pour un diagnostic et une remise en route."),
+             "Contactez-nous directement au 06 04 67 09 43 : nous intervenons rapidement pour un diagnostic et une remise en route."),
         ],
     },
     {
