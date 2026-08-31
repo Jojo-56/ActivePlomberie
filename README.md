@@ -56,3 +56,4 @@ Modifiez les informations (téléphone, adresse, services, avis, communes desser
 - Balises meta title/description uniques par page, Open Graph, canonical.
 - `sitemap.xml` et `robots.txt`.
 - Site responsive (mobile-first), maillage interne entre les pages, un bouton d'appel fixe sur mobile.
+"# ActivePlomberie" 
