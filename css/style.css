@@ -28,6 +28,7 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
+html,body{ overflow-x:hidden; max-width:100%; }
 body{
   margin:0;
   font-family:var(--font);
@@ -206,6 +207,7 @@ section{ padding:74px 0; }
 
 /* ---------- Services grid ---------- */
 .services-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+@media (min-width:781px){ .services-grid-2col{ grid-template-columns:repeat(2,1fr); } }
 .service-card{
   background:#fff; border:1px solid var(--line); border-radius:var(--radius);
   padding:28px 24px; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
@@ -454,6 +456,8 @@ section{ padding:74px 0; }
   .testi-grid{ grid-template-columns:1fr; }
   .footer-grid{ grid-template-columns:1fr; gap:30px; }
   .info-cards{ grid-template-columns:1fr; }
+  .zone-mini{ flex-wrap:wrap; }
+  .zone-mini a{ margin-left:60px; white-space:normal; }
   .form-row{ grid-template-columns:1fr; }
   .zone-grid{ grid-template-columns:1fr 1fr; }
   .badges-tech{ grid-template-columns:1fr 1fr; }
@@ -505,4 +509,10 @@ section{ padding:74px 0; }
 }
 @media (max-width:780px){
   .lightbox-close{ top:12px; right:12px; width:38px; height:38px; font-size:1.3rem; }
+}
+
+/* Petits écrans (téléphones étroits) : la grille de communes passe sur une colonne
+   pour éviter que les noms longs (ex. "La Roche-sur-Foron") ne débordent. */
+@media (max-width:420px){
+  .zone-grid{ grid-template-columns:1fr; }
 }

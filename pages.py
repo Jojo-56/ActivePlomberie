@@ -187,7 +187,7 @@ def page_nos_services():
     ) + """
     <section>
       <div class="container">
-        <div class="services-grid" style="grid-template-columns:repeat(2,1fr);">{cards}</div>
+        <div class="services-grid services-grid-2col">{cards}</div>
       </div>
     </section>
     """.format(cards=cards) + build_cta_banner()
@@ -501,7 +501,7 @@ def page_zones():
     ) + """
     <section>
       <div class="container">
-        <div class="detail-grid" style="grid-template-columns:1fr 1fr; align-items:start;">
+        <div class="detail-grid zone-detail-grid">
           <div>
             <span class="eyebrow">Communes desservies</span>
             <h2 style="font-size:1.5rem; font-weight:800; color:var(--navy); margin:10px 0 20px;">Nos secteurs d'intervention</h2>
@@ -512,7 +512,7 @@ def page_zones():
             <span class="icon-wrap">{pin}</span>
             <h3 style="font-weight:800; color:var(--navy); margin-bottom:6px;">Rayon de {radius}</h3>
             <p>autour de {city}, {zip}</p>
-            <a class="btn btn-primary" style="margin-top:16px;" href="{phone_href}">{phone_icon} Appeler pour v&eacute;rifier votre secteur</a>
+            <a class="btn btn-primary" style="margin-top:16px;" href="{phone_href}">{phone_icon} V&eacute;rifier mon secteur</a>
           </div>
         </div>
       </div>
