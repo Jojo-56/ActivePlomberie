@@ -150,7 +150,6 @@ REALISATIONS_GALERIE = [
     {"title": "Faïence bleu nuit", "photo": "douche-bleue.jpg"},
     {"title": "WC suspendu, finitions soignées", "photo": "toilette-finie.jpg"},
     {"title": "Distribution chauffage en cuivre", "photo": "distribution-cuivre.jpg"},
-    {"title": "Plancher chauffant", "photo": "chauffage-sol.jpg"},
     {"title": "Douche gris anthracite, ambiance chic", "photo": "douche-chic-anthracite.jpg"},
 ]
 
