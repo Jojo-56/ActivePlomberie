@@ -15,7 +15,7 @@ BIZ = {
     "legal": "Active Plomberie 74",
     "phone_display": "06 04 67 09 43",
     "phone_href": "tel:+33604670943",
-    "email": "contact@active-plomberie74.fr",
+    "email": "activeplomberie74@gmail.com",
     "address_line": "320 rue des Sorbiers",
     "address_zip": "74300 Thyez",
     "city": "Thyez",
