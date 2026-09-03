@@ -49,7 +49,6 @@ def page_index():
             <a class="btn btn-outline" href="contact.html">Demander un devis</a>
           </div>
           <div class="trust-row">
-            <span class="item"><span class="icon-wrap">{clock}</span> Disponible<br>7j/7 &ndash; 24h/24</span>
             <span class="item"><span class="icon-wrap">{doc}</span> Devis gratuit<br>et sans engagement</span>
             <span class="item"><span class="icon-wrap">{badge}</span> Artisan local<br>&agrave; votre service</span>
             <span class="item">{stars}<br><strong>{rating}/5</strong> sur Google &middot; {reviews} avis</span>
@@ -123,7 +122,6 @@ def page_index():
           </ul>
           <a class="btn btn-primary" href="a-propos.html">En savoir plus sur moi</a>
           <div class="info-cards">
-            <div class="info-card"><span class="icon-wrap">{clock}</span><div><strong>Disponible</strong><span>7j/7 &ndash; 24h/24 pour toutes urgences</span></div></div>
             <div class="info-card"><span class="icon-wrap">{doc}</span><div><strong>Devis gratuit</strong><span>R&eacute;ponse sous 24h</span></div></div>
             <div class="info-card"><span class="icon-wrap">{shield}</span><div><strong>Garantie d&eacute;cennale</strong><span>Et assurance professionnelle</span></div></div>
             <div class="info-card"><span class="icon-wrap">{badge}</span><div><strong>Conseils personnalis&eacute;s</strong><span>Des solutions adapt&eacute;es &agrave; vos besoins</span></div></div>
@@ -163,7 +161,7 @@ def page_index():
 
     page = wrap_page(
         title="Active Plomberie 74 | Plombier chauffagiste à Thyez, Haute-Savoie",
-        description="Plombier chauffagiste à Thyez : dépannage, installation et rénovation en plomberie, chauffage et salle de bain. Devis gratuit, disponible 7j/7.",
+        description="Plombier chauffagiste à Thyez : dépannage, installation et rénovation en plomberie, chauffage et salle de bain. Devis gratuit et sans engagement.",
         path="", main_html=main, active="accueil",
     )
     return page
@@ -277,7 +275,7 @@ def page_service(s):
 
     return wrap_page(
         title="{} à {} | {}".format(s["title"], BIZ["city"], BIZ["legal"]),
-        description=s["short"] + " Devis gratuit, disponible 7j/7 en Haute-Savoie.",
+        description=s["short"] + " Devis gratuit en Haute-Savoie.",
         path=s["slug"] + ".html", main_html=main, active="services", active_service=s["slug"],
         extra_schema=faq_schema,
     ).replace("</script>\n", "</script>\n  <script type=\"application/ld+json\">" + json.dumps(service_schema, ensure_ascii=False) + "</script>\n", 1)
@@ -451,7 +449,7 @@ def page_zones():
 # =================================================================
 def page_contact():
     main = build_page_header(
-        "Contact", "Une question, un projet, une urgence ? Contactez-nous par téléphone, e-mail ou via le formulaire ci-dessous.",
+        "Contact", "Une question ou un projet ? Contactez-nous par téléphone, e-mail ou via le formulaire ci-dessous.",
         [("Accueil", "index.html"), ("Contact", None)]
     ) + """
     <section>
@@ -474,7 +472,7 @@ def page_contact():
               <div class="field">
                 <label for="sujet">Type de demande</label>
                 <select id="sujet" name="sujet">
-                  <option>D&eacute;pannage / urgence</option>
+                  <option>D&eacute;pannage</option>
                   <option>Devis chauffage</option>
                   <option>Devis chauffe-eau</option>
                   <option>Devis salle de bain</option>
@@ -498,9 +496,8 @@ def page_contact():
             <table class="hours-table">
               <tr><td>Lundi &ndash; Vendredi</td><td>7h &ndash; 20h</td></tr>
               <tr><td>Samedi</td><td>8h &ndash; 18h</td></tr>
-              <tr><td>Dimanche &amp; f&eacute;ri&eacute;s</td><td>Urgences uniquement</td></tr>
+              <tr><td>Dimanche &amp; f&eacute;ri&eacute;s</td><td>Ferm&eacute;</td></tr>
             </table>
-            <p style="color:var(--muted); font-size:.84rem; margin-top:14px;">Urgences trait&eacute;es 7j/7 et 24h/24 au {phone}.</p>
           </div>
         </div>
       </div>
@@ -511,7 +508,7 @@ def page_contact():
 
     return wrap_page(
         title="Contact | Active Plomberie 74",
-        description="Contactez Active Plomberie 74 par téléphone, e-mail ou via notre formulaire pour toute demande de devis ou intervention d'urgence.",
+        description="Contactez Active Plomberie 74 par téléphone, e-mail ou via notre formulaire pour toute demande de devis ou d'intervention.",
         path="contact.html", main_html=main, active="contact",
     )
 

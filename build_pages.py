@@ -127,13 +127,10 @@ def build_topbar():
         <span>{pin} {addr}, {zip}</span>
         <span>{mail} <a href="mailto:{email}">{email}</a></span>
       </div>
-      <div class="topbar-right">
-        <span>{clock} Disponible 7j/7 &ndash; 24h/24</span>
-      </div>
     </div>
   </div>
 """.format(pin=icon("icon-pin.svg", "icon"), addr=BIZ["address_line"], zip=BIZ["address_zip"],
-           mail=icon("icon-mail.svg", "icon"), email=BIZ["email"], clock=icon("icon-clock.svg", "icon"))
+           mail=icon("icon-mail.svg", "icon"), email=BIZ["email"])
 
 NAV_ITEMS = [
     ("index.html", "accueil", "Accueil"),
@@ -182,7 +179,6 @@ def build_header(active, active_service=None):
       <div class="nav-cta">
         <div class="nav-phone">
           <a href="{phone_href}">{phone_icon} {phone}</a>
-          <small>Disponible 7j/7 &ndash; 24h/24</small>
         </div>
         <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">{menu_icon}</button>
       </div>
@@ -290,11 +286,11 @@ def build_cta_banner():
       <div class="text">
         <span class="icon-wrap">{icon}</span>
         <div>
-          <h3>Une urgence ? Besoin d'un plombier maintenant ?</h3>
+          <h3>Besoin d'un plombier ?</h3>
           <p>Appelez-moi, j'interviens &agrave; {city} et dans tout le 74.</p>
         </div>
       </div>
-      <a class="btn btn-primary" href="{phone_href}">{phone_icon} {phone} &middot; 7j/7 &ndash; 24h/24</a>
+      <a class="btn btn-primary" href="{phone_href}">{phone_icon} {phone}</a>
     </div>
   </section>
 """.format(icon=icon("icon-phone-white.svg"), city=BIZ["city"], phone_href=BIZ["phone_href"],

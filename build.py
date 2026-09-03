@@ -32,8 +32,8 @@ SERVICES = [
     {
         "slug": "depannage-plomberie", "icon": "icon-droplet.svg",
         "title": "Dépannage plomberie",
-        "short": "Fuite d'eau, canalisation bouchée, chasse d'eau, urgence 7j/7 et 24h/24.",
-        "hero_lead": "Fuite d'eau, canalisation bouchée, WC en panne... nos plombiers interviennent à Thyez et dans toute la Haute-Savoie, 7j/7 et 24h/24.",
+        "short": "Fuite d'eau, canalisation bouchée, chasse d'eau.",
+        "hero_lead": "Fuite d'eau, canalisation bouchée, WC en panne... nos plombiers interviennent à Thyez et dans toute la Haute-Savoie.",
         "items": [
             ("Recherche et réparation de fuite", "Détection précise et réparation sans dégât inutile."),
             ("Débouchage de canalisation", "Évier, douche, WC : intervention efficace et soignée."),
@@ -41,10 +41,10 @@ SERVICES = [
             ("Dépannage WC et chasse d'eau", "Remise en état ou remplacement le jour même si besoin."),
         ],
         "faq": [
-            ("Intervenez-vous en urgence le week-end et la nuit ?",
-             "Oui, notre service de dépannage est disponible 7j/7 et 24h/24, y compris les week-ends et jours fériés, pour toute urgence plomberie."),
+            ("Intervenez-vous le week-end ?",
+             "Je suis disponible du lundi au samedi. Contactez-moi directement pour vérifier mes disponibilités selon votre demande."),
             ("Quel est le délai d'intervention moyen ?",
-             "Cela dépend de votre secteur et de la nature de l'urgence. Contactez-moi directement au 06 04 67 09 43 pour connaître le délai avant de me déplacer."),
+             "Cela dépend de votre secteur et de la nature de la demande. Contactez-moi directement au 06 04 67 09 43 pour connaître le délai avant de me déplacer."),
             ("Le devis est-il vraiment gratuit et sans engagement ?",
              "Oui, chaque devis est établi gratuitement et sans engagement de votre part, avant le début des travaux."),
         ],
