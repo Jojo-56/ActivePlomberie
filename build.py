@@ -33,10 +33,10 @@ SERVICES = [
         "slug": "depannage-plomberie", "icon": "icon-droplet.svg",
         "title": "Dépannage plomberie",
         "short": "Fuite d'eau, canalisation bouchée, chasse d'eau, urgence 7j/7 et 24h/24.",
-        "hero_lead": "Fuite d'eau, canalisation bouchée, WC en panne... nos plombiers interviennent rapidement à Thyez et dans toute la Haute-Savoie, 7j/7 et 24h/24.",
+        "hero_lead": "Fuite d'eau, canalisation bouchée, WC en panne... nos plombiers interviennent à Thyez et dans toute la Haute-Savoie, 7j/7 et 24h/24.",
         "items": [
             ("Recherche et réparation de fuite", "Détection précise et réparation sans dégât inutile."),
-            ("Débouchage de canalisation", "Évier, douche, WC : intervention rapide et efficace."),
+            ("Débouchage de canalisation", "Évier, douche, WC : intervention efficace et soignée."),
             ("Réparation de robinetterie", "Mitigeurs, joints, chasses d'eau qui fuient."),
             ("Dépannage WC et chasse d'eau", "Remise en état ou remplacement le jour même si besoin."),
         ],
@@ -44,7 +44,7 @@ SERVICES = [
             ("Intervenez-vous en urgence le week-end et la nuit ?",
              "Oui, notre service de dépannage est disponible 7j/7 et 24h/24, y compris les week-ends et jours fériés, pour toute urgence plomberie."),
             ("Quel est le délai d'intervention moyen ?",
-             "Pour une urgence (fuite, dégât des eaux), nous intervenons le plus rapidement possible, généralement dans l'heure selon votre secteur."),
+             "Cela dépend de votre secteur et de la nature de l'urgence. Contactez-moi directement au 06 04 67 09 43 pour connaître le délai avant de me déplacer."),
             ("Le devis est-il vraiment gratuit et sans engagement ?",
              "Oui, chaque devis est établi gratuitement et sans engagement de votre part, avant le début des travaux."),
         ],
@@ -57,7 +57,7 @@ SERVICES = [
         "items": [
             ("Installation de chaudière", "Chaudière gaz, électrique ou à condensation, conseils adaptés à votre logement."),
             ("Entretien annuel", "Contrôle et nettoyage pour un chauffage performant et sécurisé."),
-            ("Dépannage panne de chauffage", "Diagnostic rapide en cas de panne, même en hiver."),
+            ("Dépannage panne de chauffage", "Diagnostic précis en cas de panne, même en hiver."),
             ("Remplacement de radiateurs", "Radiateurs eau chaude, sèche-serviettes, équilibrage du réseau."),
         ],
         "faq": [
@@ -66,7 +66,7 @@ SERVICES = [
             ("Quels types de chauffage installez-vous ?",
              "Nous installons et entretenons les chaudières gaz, électriques et à condensation, ainsi que les radiateurs eau chaude et sèche-serviettes."),
             ("Que faire en cas de panne de chauffage en hiver ?",
-             "Contactez-nous directement au 06 04 67 09 43 : nous intervenons rapidement pour un diagnostic et une remise en route."),
+             "Contactez-nous directement au 06 04 67 09 43 pour un diagnostic et une remise en route."),
         ],
     },
     {
@@ -78,7 +78,7 @@ SERVICES = [
             ("Chauffe-eau électrique", "Installation et remplacement, tous volumes, toutes marques."),
             ("Chauffe-eau thermodynamique", "Solution économique et écologique, éligible aux aides."),
             ("Détartrage et entretien", "Pour prolonger la durée de vie de votre appareil."),
-            ("Dépannage panne d'eau chaude", "Diagnostic rapide en cas de panne ou de fuite."),
+            ("Dépannage panne d'eau chaude", "Diagnostic précis en cas de panne ou de fuite."),
         ],
         "faq": [
             ("Quelle est la durée de vie moyenne d'un chauffe-eau ?",

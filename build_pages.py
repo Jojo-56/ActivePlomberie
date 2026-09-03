@@ -128,7 +128,7 @@ def build_topbar():
         <span>{mail} <a href="mailto:{email}">{email}</a></span>
       </div>
       <div class="topbar-right">
-        <span>{clock} Intervention rapide 7j/7 &ndash; 24h/24</span>
+        <span>{clock} Disponible 7j/7 &ndash; 24h/24</span>
       </div>
     </div>
   </div>
@@ -182,7 +182,7 @@ def build_header(active, active_service=None):
       <div class="nav-cta">
         <div class="nav-phone">
           <a href="{phone_href}">{phone_icon} {phone}</a>
-          <small>Intervention rapide 7j/7 &ndash; 24h/24</small>
+          <small>Disponible 7j/7 &ndash; 24h/24</small>
         </div>
         <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">{menu_icon}</button>
       </div>
@@ -291,7 +291,7 @@ def build_cta_banner():
         <span class="icon-wrap">{icon}</span>
         <div>
           <h3>Une urgence ? Besoin d'un plombier maintenant ?</h3>
-          <p>Appelez-moi, j'interviens rapidement &agrave; {city} et dans tout le 74.</p>
+          <p>Appelez-moi, j'interviens &agrave; {city} et dans tout le 74.</p>
         </div>
       </div>
       <a class="btn btn-primary" href="{phone_href}">{phone_icon} {phone} &middot; 7j/7 &ndash; 24h/24</a>

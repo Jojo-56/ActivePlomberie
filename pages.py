@@ -43,13 +43,13 @@ def page_index():
         <div>
           <span class="eyebrow">Plombier chauffagiste &agrave; {city}</span>
           <h1>Votre confort,<br>notre <span class="accent">expertise.</span></h1>
-          <p class="lead">D&eacute;pannage rapide, installations et r&eacute;novations de plomberie et chauffage dans toute la Haute-Savoie.</p>
+          <p class="lead">D&eacute;pannage, installations et r&eacute;novations de plomberie et chauffage dans toute la Haute-Savoie.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="{phone_href}">{phone_icon} Appeler maintenant</a>
             <a class="btn btn-outline" href="contact.html">Demander un devis</a>
           </div>
           <div class="trust-row">
-            <span class="item"><span class="icon-wrap">{clock}</span> Intervention rapide<br>7j/7 &ndash; 24h/24</span>
+            <span class="item"><span class="icon-wrap">{clock}</span> Disponible<br>7j/7 &ndash; 24h/24</span>
             <span class="item"><span class="icon-wrap">{doc}</span> Devis gratuit<br>et sans engagement</span>
             <span class="item"><span class="icon-wrap">{badge}</span> Artisan local<br>&agrave; votre service</span>
             <span class="item">{stars}<br><strong>{rating}/5</strong> sur Google &middot; {reviews} avis</span>
@@ -123,7 +123,7 @@ def page_index():
           </ul>
           <a class="btn btn-primary" href="a-propos.html">En savoir plus sur moi</a>
           <div class="info-cards">
-            <div class="info-card"><span class="icon-wrap">{clock}</span><div><strong>Intervention rapide</strong><span>7j/7 &ndash; 24h/24 pour toutes urgences</span></div></div>
+            <div class="info-card"><span class="icon-wrap">{clock}</span><div><strong>Disponible</strong><span>7j/7 &ndash; 24h/24 pour toutes urgences</span></div></div>
             <div class="info-card"><span class="icon-wrap">{doc}</span><div><strong>Devis gratuit</strong><span>R&eacute;ponse sous 24h</span></div></div>
             <div class="info-card"><span class="icon-wrap">{shield}</span><div><strong>Garantie d&eacute;cennale</strong><span>Et assurance professionnelle</span></div></div>
             <div class="info-card"><span class="icon-wrap">{badge}</span><div><strong>Conseils personnalis&eacute;s</strong><span>Des solutions adapt&eacute;es &agrave; vos besoins</span></div></div>
@@ -163,7 +163,7 @@ def page_index():
 
     page = wrap_page(
         title="Active Plomberie 74 | Plombier chauffagiste à Thyez, Haute-Savoie",
-        description="Plombier chauffagiste à Thyez : dépannage, installation et rénovation en plomberie, chauffage et salle de bain. Devis gratuit, intervention rapide 7j/7.",
+        description="Plombier chauffagiste à Thyez : dépannage, installation et rénovation en plomberie, chauffage et salle de bain. Devis gratuit, disponible 7j/7.",
         path="", main_html=main, active="accueil",
     )
     return page
@@ -255,7 +255,7 @@ def page_service(s):
           <h4>Nos services</h4>
           <div class="services-mini">{sidebar_links}</div>
           <div class="call-box">
-            <p>Besoin d'une intervention rapide ?</p>
+            <p>Besoin d'un devis ou d'une intervention ?</p>
             <a href="{phone_href}">{phone}</a>
             <a class="btn btn-outline-light btn-block" href="contact.html">Demander un devis gratuit</a>
           </div>
@@ -277,7 +277,7 @@ def page_service(s):
 
     return wrap_page(
         title="{} à {} | {}".format(s["title"], BIZ["city"], BIZ["legal"]),
-        description=s["short"] + " Devis gratuit, intervention rapide 7j/7 en Haute-Savoie.",
+        description=s["short"] + " Devis gratuit, disponible 7j/7 en Haute-Savoie.",
         path=s["slug"] + ".html", main_html=main, active="services", active_service=s["slug"],
         extra_schema=faq_schema,
     ).replace("</script>\n", "</script>\n  <script type=\"application/ld+json\">" + json.dumps(service_schema, ensure_ascii=False) + "</script>\n", 1)
