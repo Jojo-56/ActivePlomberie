@@ -22,7 +22,7 @@ BIZ = {
     "radius": "40 km",
     "rating": "4.9",
     "reviews": "50",
-    "domain": "https://www.active-plomberie74.fr",
+    "domain": "https://www.activeplomberie74.fr",
 }
 
 COMMUNES = ["Thyez", "Cluses", "Scionzier", "Marignier", "Bonneville", "Sallanches",
