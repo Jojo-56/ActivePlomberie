@@ -10,7 +10,7 @@
     "city": "Thyez",
     "radius": "40 km",
     "rating": "4.9",
-    "reviews": "49",
+    "reviews": "50",
     "domain": "https://www.active-plomberie74.fr"
   },
   "communes": [
@@ -177,22 +177,44 @@
   ],
   "testimonials": [
     {
-      "name": "Julien D.",
-      "city": "Scionzier",
-      "initials": "JD",
-      "text": "Intervention rapide pour une fuite d'eau. Travail propre et efficace. Je recommande vivement !"
+      "name": "Anne J.",
+      "initials": "AJ",
+      "text": "J'ai fait appel à ce plombier et je suis très satisfaite de son intervention. Il a été disponible très rapidement, est arrivé à l'heure, et a tout de suite trouvé la cause du problème. Le travail a été fait proprement et efficacement. Je recommande sans hésiter !"
     },
     {
-      "name": "Sophie M.",
-      "city": "Cluses",
-      "initials": "SM",
-      "text": "Rénovation complète de notre salle de bain, résultat parfait et équipe très professionnelle."
+      "name": "Véronique P.",
+      "initials": "VP",
+      "text": "J'ai fait appel à ce plombier pour intervenir sur mes toilettes et j'en suis vraiment ravie. Il a été très professionnel, rapide et le travail est impeccable. Je recommande vivement !"
     },
     {
-      "name": "Marc P.",
-      "city": "Bonneville",
-      "initials": "MP",
-      "text": "Artisan sérieux, à l'écoute et de très bon conseil. Tarifs justes."
+      "name": "Lionel T.",
+      "initials": "LT",
+      "text": "Intervention rapide, bon travail et très sympa, je referais appel à lui si nécessaire, je recommande fortement. Merci."
+    },
+    {
+      "name": "Evelyne J.",
+      "initials": "EJ",
+      "text": "Professionnel réactif et disponible rapidement. Efficace, agréable et cordial. Nous recommandons vivement."
+    },
+    {
+      "name": "Frédéric B.",
+      "initials": "FB",
+      "text": "Un professionnel sérieux, ponctuel et soigné. Nous avons fait appel à ses services à plusieurs reprises et il a toujours su réaliser les travaux demandés rapidement et pour un coût raisonnable."
+    },
+    {
+      "name": "Céline",
+      "initials": "C",
+      "text": "Ravie ! Personne professionnelle et qui donne de bons conseils ! À l'écoute du client et rapide pour intervenir. Je recommande."
+    },
+    {
+      "name": "Cécile F.",
+      "initials": "CF",
+      "text": "Très réactive, bonne communication, très efficace, je recommande à 100 %."
+    },
+    {
+      "name": "Lucie B.",
+      "initials": "LB",
+      "text": "Efficacité, rapidité et explications claires ! Je recommande Active Plomberie sans hésiter."
     }
   ],
   "avatar_colors": [

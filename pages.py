@@ -23,7 +23,7 @@ def page_index():
             gallery_pairs += photo_card_single(r["photo"], r["title"], r["city"])
 
     testi_cards = ""
-    for i, t in enumerate(TESTIMONIALS):
+    for i, t in enumerate(TESTIMONIALS[:3]):
         testi_cards += """<div class="testi-card">
           {stars}
           <p>&laquo;&nbsp;{text}&nbsp;&raquo;</p>
@@ -31,11 +31,11 @@ def page_index():
             <span class="avatar" style="background:{color}">{initials}</span>
             <div>
               <strong>{name}</strong>
-              <span>{google} {city}</span>
+              <span>{google} Avis Google</span>
             </div>
           </div>
         </div>""".format(stars=stars(), text=t["text"], color=AVATAR_COLORS[i % 3], initials=t["initials"],
-                          name=t["name"], city=t["city"], google=icon("icon-google-blue.svg", "icon"))
+                          name=t["name"], google=icon("icon-google-blue.svg", "icon"))
 
     main = """
     <section class="hero">
@@ -330,10 +330,10 @@ def page_avis():
           <p>&laquo;&nbsp;{text}&nbsp;&raquo;</p>
           <div class="testi-who">
             <span class="avatar" style="background:{color}">{initials}</span>
-            <div><strong>{name}</strong><span>{google} {city}</span></div>
+            <div><strong>{name}</strong><span>{google} Avis Google</span></div>
           </div>
         </div>""".format(stars=stars(), text=t["text"], color=AVATAR_COLORS[i % 3],
-                          initials=t["initials"], name=t["name"], city=t["city"], google=icon("icon-google-blue.svg", "icon"))
+                          initials=t["initials"], name=t["name"], google=icon("icon-google-blue.svg", "icon"))
 
     main = build_page_header(
         "Avis clients", "La satisfaction de nos clients est notre priorité. Découvrez leurs retours d'expérience.",
