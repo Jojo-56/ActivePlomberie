@@ -361,7 +361,8 @@ section{ padding:74px 0; }
 
 /* ---------- Communes / zones page ---------- */
 .zone-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-.zone-chip{ display:flex; align-items:center; gap:10px; padding:14px 16px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); font-weight:700; color:var(--navy); font-size:.92rem; }
+.zone-chip{ display:flex; align-items:center; gap:10px; padding:14px 16px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); font-weight:700; color:var(--navy); font-size:.92rem; transition:border-color .15s ease, color .15s ease; }
+.zone-chip:hover{ border-color:var(--primary); color:var(--primary); }
 .zone-chip .icon{ width:16px; height:16px; color:var(--primary); flex:none; }
 .map-frame{ background:var(--primary-light); border:1px solid var(--line); border-radius:var(--radius-lg); padding:32px; text-align:center; color:var(--primary-dark); }
 .map-frame .icon-wrap{ width:60px; height:60px; border-radius:50%; background:#fff; color:var(--primary); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:var(--shadow-sm); }

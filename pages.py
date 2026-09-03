@@ -409,10 +409,92 @@ def page_apropos():
     )
 
 # =================================================================
+# PAGE PAR COMMUNE (SEO local)
+# =================================================================
+def page_commune(commune):
+    slug = commune_slug(commune)
+
+    services_cards = ""
+    for s in SERVICES:
+        services_cards += """<div class="service-card">
+          <span class="icon-wrap">{icon}</span>
+          <h3>{title}</h3>
+          <p>{short}</p>
+          <a class="more" href="{slug}.html">En savoir plus {arrow}</a>
+        </div>""".format(icon=icon(s["icon"]), title=s["title"], short=s["short"], slug=s["slug"], arrow=icon("icon-arrow.svg"))
+
+    nearby = [c for c in COMMUNES if c != commune]
+    chips = "".join('<a class="zone-chip" href="plombier-{s}.html">{pin} {c}</a>'.format(
+        s=commune_slug(c), pin=icon("icon-pin.svg"), c=c) for c in nearby)
+
+    main = build_page_header(
+        "Plombier chauffagiste à " + commune,
+        "Active Plomberie 74 intervient à {commune} pour vos travaux de plomberie, chauffage et rénovation de salle de bain.".format(commune=commune),
+        [("Accueil", "index.html"), ("Zones d'intervention", "zones-intervention.html"), (commune, None)]
+    ) + """
+    <section>
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Nos services &agrave; {commune}</span>
+          <h2>Plomberie et chauffage, tous vos besoins couverts.</h2>
+        </div>
+        <div class="services-grid">{services_cards}</div>
+      </div>
+    </section>
+
+    <section class="section-alt">
+      <div class="container about-grid">
+        <div class="about-media">
+          <div class="photo-frame"><img class="lightbox-img" src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74, artisan &agrave; {commune}" loading="lazy"></div>
+          <div class="about-badge">{stars}<div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div></div>
+        </div>
+        <div>
+          <span class="eyebrow">Active Plomberie 74 &agrave; {commune}</span>
+          <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; color:var(--navy); margin:10px 0 16px;">Un artisan de proximit&eacute;, &agrave; votre &eacute;coute.</h2>
+          <p style="color:var(--muted);">Bas&eacute; &agrave; {city}, j'interviens r&eacute;guli&egrave;rement &agrave; {commune} pour des travaux de plomberie, de chauffage et de r&eacute;novation de salle de bain, aupr&egrave;s des particuliers comme des professionnels.</p>
+          <ul class="about-list">
+            <li>{check} Plus de 10 ans d'exp&eacute;rience</li>
+            <li>{check} Travail soign&eacute; et durable</li>
+            <li>{check} Devis gratuit et sans engagement</li>
+            <li>{check} Garantie d&eacute;cennale et assurance professionnelle</li>
+          </ul>
+          <a class="btn btn-primary" href="contact.html">Demander un devis gratuit</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <span class="eyebrow">Zones voisines</span>
+        <h2 style="font-size:1.4rem; font-weight:800; color:var(--navy); margin:10px 0 20px;">Nous intervenons aussi pr&egrave;s de {commune}</h2>
+        <div class="zone-grid">{chips}</div>
+      </div>
+    </section>
+    """.format(commune=commune, city=BIZ["city"], services_cards=services_cards, arrow=icon("icon-arrow.svg"),
+               stars=stars(), rating=BIZ["rating"], reviews=BIZ["reviews"],
+               check=icon("icon-check-green.svg"), chips=chips)
+    main += build_cta_banner()
+
+    service_schema = {
+        "@context": "https://schema.org", "@type": "Service",
+        "serviceType": "Plomberie et chauffage",
+        "name": "Plombier chauffagiste &agrave; " + commune,
+        "provider": {"@type": "Plumber", "name": BIZ["legal"]},
+        "areaServed": {"@type": "City", "name": commune},
+    }
+
+    return wrap_page(
+        title="Plombier chauffagiste &agrave; {} | {}".format(commune, BIZ["legal"]),
+        description="Active Plomberie 74, votre plombier chauffagiste &agrave; {}. D&eacute;pannage, installation et r&eacute;novation en plomberie et chauffage. Devis gratuit.".format(commune),
+        path="plombier-{}.html".format(slug), main_html=main, active="zones",
+        extra_schema=service_schema,
+    )
+
+# =================================================================
 # ZONES D'INTERVENTION
 # =================================================================
 def page_zones():
-    chips = "".join('<div class="zone-chip">{pin} {c}</div>'.format(pin=icon("icon-pin.svg"), c=c) for c in COMMUNES)
+    chips = "".join('<a class="zone-chip" href="plombier-{slug}.html">{pin} {c}</a>'.format(slug=commune_slug(c), pin=icon("icon-pin.svg"), c=c) for c in COMMUNES)
     main = build_page_header(
         "Zones d'intervention", "Active Plomberie 74 intervient à {city} et dans un rayon de {radius} autour, en Haute-Savoie.".format(city=BIZ["city"], radius=BIZ["radius"]),
         [("Accueil", "index.html"), ("Zones d'intervention", None)]
@@ -558,6 +640,8 @@ def build_all():
     write_page("avis-clients.html", page_avis())
     write_page("a-propos.html", page_apropos())
     write_page("zones-intervention.html", page_zones())
+    for c in COMMUNES:
+        write_page("plombier-{}.html".format(commune_slug(c)), page_commune(c))
     write_page("contact.html", page_contact())
     write_page("mentions-legales.html", page_mentions())
 
@@ -568,8 +652,9 @@ def build_all():
 
     # sitemap.xml
     pages = ["index.html", "nos-services.html"] + [s["slug"] + ".html" for s in SERVICES] + \
-        ["realisations.html", "avis-clients.html", "a-propos.html", "zones-intervention.html",
-         "contact.html", "mentions-legales.html"]
+        ["realisations.html", "avis-clients.html", "a-propos.html", "zones-intervention.html"] + \
+        ["plombier-{}.html".format(commune_slug(c)) for c in COMMUNES] + \
+        ["contact.html", "mentions-legales.html"]
     urls = ""
     for p in pages:
         loc = BIZ["domain"] + "/" + p

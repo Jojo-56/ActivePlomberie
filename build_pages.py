@@ -34,6 +34,13 @@ def service_by_slug(slug):
             return s
     return None
 
+def commune_slug(name):
+    import re, unicodedata
+    s = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode("ascii")
+    s = s.lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s
+
 # -----------------------------------------------------------------
 # Cartes photos réelles (réalisations)
 # -----------------------------------------------------------------
@@ -197,7 +204,7 @@ def build_footer():
         '<li><a href="{slug}.html">{title}</a></li>'.format(slug=s["slug"], title=s["title"]) for s in SERVICES
     )
     communes_links = "".join(
-        '<li>{c}</li>'.format(c=c) for c in COMMUNES[:6]
+        '<li><a href="plombier-{slug}.html">{c}</a></li>'.format(slug=commune_slug(c), c=c) for c in COMMUNES[:6]
     )
     return """<footer class="site-footer">
     <div class="container">
