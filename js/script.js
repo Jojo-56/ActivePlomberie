@@ -101,14 +101,17 @@ document.addEventListener('DOMContentLoaded', function () {
   if (lightboxImgs.length) {
     var overlay = document.createElement('div');
     overlay.className = 'lightbox-overlay';
-    overlay.innerHTML = '<button class="lightbox-close" aria-label="Fermer">&times;</button><img alt="">';
+    overlay.innerHTML = '<button class="lightbox-close" aria-label="Fermer">&times;</button>' +
+      '<div class="lightbox-content"><img alt=""><p class="lightbox-caption"></p></div>';
     document.body.appendChild(overlay);
     var overlayImg = overlay.querySelector('img');
+    var overlayCaption = overlay.querySelector('.lightbox-caption');
     var overlayClose = overlay.querySelector('.lightbox-close');
 
-    function openLightbox(src, alt) {
+    function openLightbox(src, alt, caption) {
       overlayImg.setAttribute('src', src);
       overlayImg.setAttribute('alt', alt || '');
+      overlayCaption.textContent = caption || '';
       overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -119,7 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     lightboxImgs.forEach(function (img) {
       img.addEventListener('click', function () {
-        openLightbox(img.getAttribute('src'), img.getAttribute('alt'));
+        var caption = img.getAttribute('data-caption') || img.getAttribute('alt');
+        openLightbox(img.getAttribute('src'), img.getAttribute('alt'), caption);
       });
     });
     overlayClose.addEventListener('click', closeLightbox);
