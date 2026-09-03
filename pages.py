@@ -522,30 +522,22 @@ def page_mentions():
     ) + """
     <section>
       <div class="container legal-body">
-        <h2>&Eacute;diteur du site</h2>
-        <p><strong>{legal}</strong><br>
-        Entreprise individuelle &ndash; Artisan plombier chauffagiste<br>
-        Adresse&nbsp;: {addr}, {zip}<br>
-        T&eacute;l&eacute;phone&nbsp;: {phone}<br>
-        E-mail&nbsp;: {email}<br>
+        <h2>&Eacute;diteur</h2>
+        <p><strong>{legal}</strong> &mdash; Entreprise individuelle, artisan plombier chauffagiste<br>
         SIRET&nbsp;: [num&eacute;ro SIRET &agrave; compl&eacute;ter]<br>
-        Directeur de la publication&nbsp;: [nom &agrave; compl&eacute;ter]</p>
+        Adresse&nbsp;: {addr}, {zip}<br>
+        Contact&nbsp;: {email}<br>
+        Directeur de la publication&nbsp;: Johane Delepeleire</p>
 
         <h2>H&eacute;bergement</h2>
         <p>[Nom de l'h&eacute;bergeur, adresse et contact &agrave; compl&eacute;ter lors de la mise en ligne du site]</p>
 
         <h2>Propri&eacute;t&eacute; intellectuelle</h2>
-        <p>L'ensemble des contenus pr&eacute;sents sur ce site (textes, images, logo) est la propri&eacute;t&eacute; de {legal}, sauf mention contraire, et ne peut &ecirc;tre reproduit sans autorisation.</p>
-
-        <h2>Donn&eacute;es personnelles</h2>
-        <p>Les informations transmises via le formulaire de contact sont utilis&eacute;es exclusivement pour r&eacute;pondre &agrave; votre demande et ne sont ni revendues ni transmises &agrave; des tiers. Conform&eacute;ment au RGPD, vous disposez d'un droit d'acc&egrave;s, de rectification et de suppression de vos donn&eacute;es en nous contactant &agrave; {email}.</p>
-
-        <h2>Cookies</h2>
-        <p>Ce site n'utilise pas de cookies de suivi publicitaire. [&Agrave; adapter si un outil d'analyse d'audience est ajout&eacute; ult&eacute;rieurement.]</p>
+        <p>L'ensemble des contenus du site (textes, images, logo, interface) est la propri&eacute;t&eacute; exclusive de {legal} et est prot&eacute;g&eacute; par les lois fran&ccedil;aises et internationales relatives au droit d'auteur. Toute reproduction, m&ecirc;me partielle, est interdite sans autorisation pr&eacute;alable.</p>
       </div>
     </section>
     """.format(legal=BIZ["legal"], addr=BIZ["address_line"], zip=BIZ["address_zip"],
-               phone=BIZ["phone_display"], email=BIZ["email"])
+               email=BIZ["email"])
 
     return wrap_page(
         title="Mentions légales | Active Plomberie 74",
