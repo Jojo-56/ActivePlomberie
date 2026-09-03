@@ -43,7 +43,7 @@ def photo_card_before_after(image, title, subtitle):
         <figure style="aspect-ratio:16/8;">
           <span class="tag tag-avant">Avant</span>
           <span class="tag tag-apres">Apr&egrave;s</span>
-          <img src="images/photos/{image}" alt="{title} &ndash; avant / apr&egrave;s" loading="lazy" style="object-position:center;">
+          <img class="lightbox-img" src="images/photos/{image}" alt="{title} &ndash; avant / apr&egrave;s" loading="lazy" style="object-position:center;">
         </figure>
       </div>
       <div class="cap-body"><strong>{title}</strong><span>{subtitle}</span></div>
@@ -53,7 +53,7 @@ def photo_card_single(image, title, subtitle):
     return """<div class="gallery-pair">
       <div class="imgs imgs-single">
         <figure>
-          <img src="images/photos/{image}" alt="{title}" loading="lazy">
+          <img class="lightbox-img" src="images/photos/{image}" alt="{title}" loading="lazy">
         </figure>
       </div>
       <div class="cap-body"><strong>{title}</strong><span>{subtitle}</span></div>

@@ -96,6 +96,41 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  /* ---------- Lightbox photos ---------- */
+  var lightboxImgs = document.querySelectorAll('.lightbox-img');
+  if (lightboxImgs.length) {
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = '<button class="lightbox-close" aria-label="Fermer">&times;</button><img alt="">';
+    document.body.appendChild(overlay);
+    var overlayImg = overlay.querySelector('img');
+    var overlayClose = overlay.querySelector('.lightbox-close');
+
+    function openLightbox(src, alt) {
+      overlayImg.setAttribute('src', src);
+      overlayImg.setAttribute('alt', alt || '');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightboxImgs.forEach(function (img) {
+      img.addEventListener('click', function () {
+        openLightbox(img.getAttribute('src'), img.getAttribute('alt'));
+      });
+    });
+    overlayClose.addEventListener('click', closeLightbox);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
   /* ---------- Année automatique dans le footer ---------- */
   document.querySelectorAll('.js-year').forEach(function (el) {
     el.textContent = new Date().getFullYear();

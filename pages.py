@@ -55,7 +55,7 @@ def page_index():
           </div>
         </div>
         <div class="hero-media">
-          <div class="frame"><img src="images/photos/hero-bain-luxe.jpg" alt="Douche italienne r&eacute;nov&eacute;e par Active Plomberie, ambiance gris anthracite" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div class="frame"><img class="lightbox-img" src="images/photos/hero-bain-luxe.jpg" alt="Douche italienne r&eacute;nov&eacute;e par Active Plomberie, ambiance gris anthracite" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
           <div class="hero-badges">
             <div class="hero-badge">
               <span class="icon-wrap">{pin}</span>
@@ -104,7 +104,7 @@ def page_index():
     <section>
       <div class="container about-grid">
         <div class="about-media">
-          <div class="photo-frame"><img src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74 devant son v&eacute;hicule de service" loading="lazy"></div>
+          <div class="photo-frame"><img class="lightbox-img" src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74 devant son v&eacute;hicule de service" loading="lazy"></div>
           <div class="about-badge">
             {stars_sm}
             <div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div>
@@ -242,7 +242,7 @@ def page_service(s):
           <span class="eyebrow">Ce que nous proposons</span>
           <h2 style="font-size:1.7rem; font-weight:800; color:var(--navy); margin:10px 0 4px;">{title}</h2>
           <p style="color:var(--muted); margin-top:10px;">{lead}</p>
-          <div class="service-photo"><img src="images/photos/{photo}" alt="{photo_alt}" loading="lazy"></div>
+          <div class="service-photo"><img class="lightbox-img" src="images/photos/{photo}" alt="{photo_alt}" loading="lazy"></div>
           <ul class="detail-list">{items}</ul>
 
           <span class="eyebrow">Questions fr&eacute;quentes</span>
@@ -296,7 +296,7 @@ def page_realisations():
       <div class="container">
         <div class="realisation-feature">
           <figure>
-            <img src="images/photos/avant-apres-salle-de-bain.webp" alt="R&eacute;novation de salle de bain, avant et apr&egrave;s" loading="lazy">
+            <img class="lightbox-img" src="images/photos/avant-apres-salle-de-bain.webp" alt="R&eacute;novation de salle de bain, avant et apr&egrave;s" loading="lazy">
           </figure>
           <div class="cap-body">
             <div>
@@ -375,7 +375,7 @@ def page_apropos():
     <section>
       <div class="container about-grid">
         <div class="about-media">
-          <div class="photo-frame"><img src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74 devant son v&eacute;hicule de service" loading="lazy"></div>
+          <div class="photo-frame"><img class="lightbox-img" src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74 devant son v&eacute;hicule de service" loading="lazy"></div>
           <div class="about-badge">{stars}<div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div></div>
         </div>
         <div>
