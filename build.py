@@ -142,7 +142,7 @@ REALISATIONS = [
 ]
 
 REALISATIONS_GALERIE = [
-    {"title": "Double vasque sur mesure", "photo": "bain-double-vasque-1.jpg"},
+    {"title": "Double vasque", "photo": "bain-double-vasque-1.jpg"},
     {"title": "Douche à l'italienne, finitions dorées", "photo": "douche-luxe-dore.jpg"},
     {"title": "Douche vitrée, faïence grise", "photo": "douche-finie-1.webp"},
     {"title": "Rénovation salle d'eau complète", "photo": "bain-baignoire-1.jpg"},
