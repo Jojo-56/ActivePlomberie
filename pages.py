@@ -605,21 +605,21 @@ def page_mentions():
     <section>
       <div class="container legal-body">
         <h2>&Eacute;diteur</h2>
-        <p><strong>{legal}</strong> &mdash; Entreprise individuelle, artisan plombier chauffagiste<br>
-        SIRET&nbsp;: [num&eacute;ro SIRET &agrave; compl&eacute;ter]<br>
-        Adresse&nbsp;: {addr}, {zip}<br>
+        <p><strong>CHRONOSHARP</strong> &mdash; SAS, soci&eacute;t&eacute; par actions simplifi&eacute;e au capital de 800&nbsp;&euro;<br>
+        SIREN&nbsp;: 889 637 856<br>
+        SIRET&nbsp;: 889 637 856 00036<br>
+        Si&egrave;ge social&nbsp;: 7 rue Foy, 29200 Brest<br>
         Contact&nbsp;: {email}<br>
-        Directeur de la publication&nbsp;: Johane Delepeleire</p>
+        Directeur de la publication&nbsp;: Jordan Cornec</p>
 
         <h2>H&eacute;bergement</h2>
         <p>[Nom de l'h&eacute;bergeur, adresse et contact &agrave; compl&eacute;ter lors de la mise en ligne du site]</p>
 
         <h2>Propri&eacute;t&eacute; intellectuelle</h2>
-        <p>L'ensemble des contenus du site (textes, images, logo, interface) est la propri&eacute;t&eacute; exclusive de {legal} et est prot&eacute;g&eacute; par les lois fran&ccedil;aises et internationales relatives au droit d'auteur. Toute reproduction, m&ecirc;me partielle, est interdite sans autorisation pr&eacute;alable.</p>
+        <p>L'ensemble des contenus du site (textes, images, logo, interface) est la propri&eacute;t&eacute; exclusive de CHRONOSHARP et est prot&eacute;g&eacute; par les lois fran&ccedil;aises et internationales relatives au droit d'auteur. Toute reproduction, m&ecirc;me partielle, est interdite sans autorisation pr&eacute;alable.</p>
       </div>
     </section>
-    """.format(legal=BIZ["legal"], addr=BIZ["address_line"], zip=BIZ["address_zip"],
-               email=BIZ["email"])
+    """.format(email=BIZ["email"])
 
     return wrap_page(
         title="Mentions légales | Active Plomberie 74",
