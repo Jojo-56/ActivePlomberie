@@ -609,17 +609,19 @@ def page_mentions():
         SIREN&nbsp;: 889 637 856<br>
         SIRET&nbsp;: 889 637 856 00036<br>
         Si&egrave;ge social&nbsp;: 7 rue Foy, 29200 Brest<br>
-        Contact&nbsp;: {email}<br>
+        Contact&nbsp;: jordan.cornec@chrono-sharp.com<br>
         Directeur de la publication&nbsp;: Jordan Cornec</p>
 
         <h2>H&eacute;bergement</h2>
-        <p>[Nom de l'h&eacute;bergeur, adresse et contact &agrave; compl&eacute;ter lors de la mise en ligne du site]</p>
+        <p><strong>Vercel Inc.</strong><br>
+        340 S Lemon Ave #4133, Walnut, CA 91789, &Eacute;tats-Unis<br>
+        <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></p>
 
         <h2>Propri&eacute;t&eacute; intellectuelle</h2>
         <p>L'ensemble des contenus du site (textes, images, logo, interface) est la propri&eacute;t&eacute; exclusive de CHRONOSHARP et est prot&eacute;g&eacute; par les lois fran&ccedil;aises et internationales relatives au droit d'auteur. Toute reproduction, m&ecirc;me partielle, est interdite sans autorisation pr&eacute;alable.</p>
       </div>
     </section>
-    """.format(email=BIZ["email"])
+    """
 
     return wrap_page(
         title="Mentions légales | Active Plomberie 74",
