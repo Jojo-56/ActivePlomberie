@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+images/_originaux_avant_compression/
+images/photos/_originaux_avant_compression/
+pages.py.bak

@@ -41,8 +41,8 @@ def page_index():
     <section class="hero">
       <div class="container">
         <div>
-          <span class="eyebrow">Plombier chauffagiste &agrave; {city}</span>
-          <h1>Votre confort,<br>notre <span class="accent">expertise.</span></h1>
+          <span class="eyebrow">Votre confort, notre expertise.</span>
+          <h1>Plombier chauffagiste &agrave; {city} en Haute-Savoie</h1>
           <p class="lead">D&eacute;pannage, installations et r&eacute;novations de plomberie et chauffage dans toute la Haute-Savoie.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="{phone_href}">{phone_icon} Appeler maintenant</a>
@@ -160,7 +160,7 @@ def page_index():
     main += build_cta_banner()
 
     page = wrap_page(
-        title="Active Plomberie 74 | Plombier chauffagiste à Thyez, Haute-Savoie",
+        title="Plombier chauffagiste à {} | {}".format(BIZ["city"], BIZ["legal"]),
         description="Plombier chauffagiste à Thyez : dépannage, installation et rénovation en plomberie, chauffage et salle de bain. Devis gratuit et sans engagement.",
         path="", main_html=main, active="accueil",
     )
@@ -193,7 +193,7 @@ def page_nos_services():
     """.format(cards=cards) + build_cta_banner()
 
     return wrap_page(
-        title="Nos services | Plomberie, chauffage, salle de bain – Active Plomberie 74",
+        title="Nos services de plomberie et chauffage | Active Plomberie 74",
         description="Découvrez tous nos services : dépannage plomberie, chauffage, chauffe-eau et rénovation de salle de bain à Thyez et en Haute-Savoie.",
         path="nos-services.html", main_html=main, active="services",
     )
@@ -478,14 +478,14 @@ def page_commune(commune):
     service_schema = {
         "@context": "https://schema.org", "@type": "Service",
         "serviceType": "Plomberie et chauffage",
-        "name": "Plombier chauffagiste &agrave; " + commune,
+        "name": "Plombier chauffagiste à " + commune,
         "provider": {"@type": "Plumber", "name": BIZ["legal"]},
         "areaServed": {"@type": "City", "name": commune},
     }
 
     return wrap_page(
-        title="Plombier chauffagiste &agrave; {} | {}".format(commune, BIZ["legal"]),
-        description="Active Plomberie 74, votre plombier chauffagiste &agrave; {}. D&eacute;pannage, installation et r&eacute;novation en plomberie et chauffage. Devis gratuit.".format(commune),
+        title="Plombier chauffagiste à {} | {}".format(commune, BIZ["legal"]),
+        description="Active Plomberie 74, votre plombier chauffagiste à {}. Dépannage, installation et rénovation en plomberie et chauffage. Devis gratuit.".format(commune),
         path="plombier-{}.html".format(slug), main_html=main, active="zones",
         extra_schema=service_schema,
     )
@@ -589,7 +589,7 @@ def page_contact():
                pin_icon=icon("icon-pin.svg"), addr=BIZ["address_line"], zip=BIZ["address_zip"])
 
     return wrap_page(
-        title="Contact | Active Plomberie 74",
+        title="Contact – Devis gratuit | Active Plomberie 74",
         description="Contactez Active Plomberie 74 par téléphone, e-mail ou via notre formulaire pour toute demande de devis ou d'intervention.",
         path="contact.html", main_html=main, active="contact",
     )
