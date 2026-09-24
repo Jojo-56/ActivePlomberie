@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Génère toutes les pages HTML. Exécuter: python3 pages.py"""
 from build_pages import *  # noqa
+from communes_contenu import COMMUNES_CONTENU, CONSEILS
 
 # =================================================================
 # INDEX
@@ -183,7 +184,7 @@ def page_nos_services():
 
     main = build_page_header(
         "Nos services", "Plomberie, chauffage, chauffe-eau, salle de bain : découvrez l'ensemble de nos prestations à Thyez et dans toute la Haute-Savoie.",
-        [("Accueil", "index.html"), ("Nos services", None)]
+        [("Accueil", "./"), ("Nos services", None)]
     ) + """
     <section>
       <div class="container">
@@ -234,7 +235,7 @@ def page_service(s):
 
     main = build_page_header(
         s["title"], s["hero_lead"],
-        [("Accueil", "index.html"), ("Nos services", "nos-services.html"), (s["title"], None)]
+        [("Accueil", "./"), ("Nos services", "nos-services.html"), (s["title"], None)]
     ) + """
     <section>
       <div class="container detail-grid">
@@ -290,7 +291,7 @@ def page_realisations():
 
     main = build_page_header(
         "Nos réalisations", "Un aperçu de nos chantiers récents en plomberie, chauffage et rénovation de salle de bain en Haute-Savoie — toutes les photos ci-dessous sont issues de nos interventions réelles.",
-        [("Accueil", "index.html"), ("Réalisations", None)]
+        [("Accueil", "./"), ("Réalisations", None)]
     ) + """
     <section>
       <div class="container">
@@ -335,7 +336,7 @@ def page_avis():
 
     main = build_page_header(
         "Avis clients", "La satisfaction de nos clients est notre priorité. Découvrez leurs retours d'expérience.",
-        [("Accueil", "index.html"), ("Avis clients", None)]
+        [("Accueil", "./"), ("Avis clients", None)]
     ) + """
     <section>
       <div class="container">
@@ -370,7 +371,7 @@ def page_apropos():
     )
     main = build_page_header(
         "À propos", "Artisan plombier chauffagiste indépendant, installé à Thyez et au service de la Haute-Savoie depuis plus de 10 ans.",
-        [("Accueil", "index.html"), ("À propos", None)]
+        [("Accueil", "./"), ("À propos", None)]
     ) + """
     <section>
       <div class="container about-grid">
@@ -414,6 +415,10 @@ def page_apropos():
 # =================================================================
 def page_commune(commune):
     slug = commune_slug(commune)
+    info = COMMUNES_CONTENU.get(commune, {})
+    cp = info.get("cp", "")
+    km, minutes = info.get("km", 0), info.get("min", 0)
+    esc = html.escape
 
     services_cards = ""
     for s in SERVICES:
@@ -421,74 +426,131 @@ def page_commune(commune):
           <span class="icon-wrap">{icon}</span>
           <h3>{title}</h3>
           <p>{short}</p>
-          <a class="more" href="{slug}.html">En savoir plus {arrow}</a>
-        </div>""".format(icon=icon(s["icon"]), title=s["title"], short=s["short"], slug=s["slug"], arrow=icon("icon-arrow.svg"))
+          <a class="more" href="{slug}.html">{title} &agrave; {commune} {arrow}</a>
+        </div>""".format(icon=icon(s["icon"]), title=s["title"], short=s["short"], slug=s["slug"],
+                         arrow=icon("icon-arrow.svg"), commune=esc(commune))
 
-    nearby = [c for c in COMMUNES if c != commune]
+    # Communes voisines : lien si une page existe, texte simple sinon
+    voisines_html = ", ".join(
+        ('<a href="plombier-{s}.html">{c}</a>'.format(s=commune_slug(v), c=esc(v)) if v in COMMUNES else esc(v))
+        for v in info.get("voisines", []))
+    autres = [c for c in COMMUNES if c != commune and c not in info.get("voisines", [])]
     chips = "".join('<a class="zone-chip" href="plombier-{s}.html">{pin} {c}</a>'.format(
-        s=commune_slug(c), pin=icon("icon-pin.svg"), c=c) for c in nearby)
+        s=commune_slug(c), pin=icon("icon-pin.svg"), c=esc(c)) for c in autres)
+
+    trajet = ("Notre atelier est situ&eacute; &agrave; {commune}.".format(commune=esc(commune)) if km == 0 else
+              "&Agrave; environ {km}&nbsp;km de notre atelier de {city}, soit une {mn}&nbsp;minutes de route.".format(
+                  km=km, city=BIZ["city"], mn=("dizaine de" if minutes <= 10 else "quinzaine de" if minutes <= 17 else "vingtaine de" if minutes <= 22 else "trentaine de" if minutes <= 35 else "cinquantaine de")))
+
+    interventions = info.get("interventions", [])
+    interventions_html = ""
+    if interventions:
+        interventions_html = """
+    <section class="section-alt">
+      <div class="container">
+        <span class="eyebrow">Chantiers &agrave; {commune}</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:800; color:var(--navy); margin:10px 0 18px;">Nos interventions r&eacute;centes &agrave; {commune}</h2>
+        <ul class="about-list">{items}</ul>
+        <p style="color:var(--muted); font-size:.9rem; margin-top:12px;">Exemples de travaux confi&eacute;s &agrave; Active Plomberie 74 &agrave; {commune}, sans information sur les clients.</p>
+      </div>
+    </section>""".format(commune=esc(commune), items="".join(
+            "<li>{check} {t}</li>".format(check=icon("icon-check-green.svg"), t=esc(t)) for t in interventions))
+
+    conseil, faq_conseil = CONSEILS.get(commune, ("", None))
+    faq = list(info.get("faq", [])) + ([faq_conseil] if faq_conseil else []) + [
+        ("Le devis est-il gratuit à {} ?".format(commune),
+         "Oui. Le devis est gratuit et sans engagement ; il détaille la fourniture, la main d'œuvre et, le cas échéant, le forfait de déplacement."),
+    ]
+    faq_html = "".join("""<details class="faq-item">
+          <summary>{q} {chev}</summary>
+          <div class="faq-body">{a}</div>
+        </details>""".format(q=esc(q), chev=icon("icon-chevron.svg"), a=esc(a)) for q, a in faq)
 
     main = build_page_header(
-        "Plombier chauffagiste à " + commune,
-        "Active Plomberie 74 intervient à {commune} pour vos travaux de plomberie, chauffage et rénovation de salle de bain.".format(commune=commune),
-        [("Accueil", "index.html"), ("Zones d'intervention", "zones-intervention.html"), (commune, None)]
+        "Plombier chauffagiste &agrave; " + esc(commune),
+        "D&eacute;pannage, chauffe-eau, chauffage et salle de bain &agrave; {commune}{cp}. {trajet}".format(
+            commune=esc(commune), cp=(" ({})".format(cp) if cp else ""), trajet=trajet),
+        [("Accueil", "./"), ("Zones d'intervention", "zones-intervention.html"), (esc(commune), None)]
     ) + """
+    <section>
+      <div class="container about-grid">
+        <div>
+          <span class="eyebrow">Active Plomberie 74 &agrave; {commune}</span>
+          <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; color:var(--navy); margin:10px 0 16px;">Votre plombier chauffagiste &agrave; {commune}</h2>
+          <p style="color:var(--muted);">{intro}</p>
+          <p style="color:var(--muted); margin-top:12px;">{contexte}</p>
+          <ul class="about-list">
+            <li>{check} Devis gratuit et sans engagement</li>
+            <li>{check} Garantie d&eacute;cennale et assurance professionnelle</li>
+            <li>{check} Particuliers, copropri&eacute;t&eacute;s et professionnels</li>
+          </ul>
+          <a class="btn btn-primary" href="contact.html">Demander un devis &agrave; {commune}</a>
+        </div>
+        <div class="about-media">
+          <div class="photo-frame"><img class="lightbox-img" src="images/photos/artisan-vehicule.jpg" alt="V&eacute;hicule d'Active Plomberie 74 en intervention &agrave; {commune}" loading="lazy"></div>
+          <div class="about-badge">{stars}<div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div></div>
+        </div>
+      </div>
+    </section>
+    {interventions_html}
+    {conseil_html}
     <section>
       <div class="container">
         <div class="section-head center">
           <span class="eyebrow">Nos services &agrave; {commune}</span>
-          <h2>Plomberie et chauffage, tous vos besoins couverts.</h2>
+          <h2>Plomberie, chauffage, eau chaude et salle de bain</h2>
         </div>
         <div class="services-grid">{services_cards}</div>
       </div>
     </section>
 
     <section class="section-alt">
-      <div class="container about-grid">
-        <div class="about-media">
-          <div class="photo-frame"><img class="lightbox-img" src="images/photos/artisan-vehicule.jpg" alt="Le plombier d'Active Plomberie 74, artisan &agrave; {commune}" loading="lazy"></div>
-          <div class="about-badge">{stars}<div><strong>{rating}/5</strong><br><span>{reviews} avis Google</span></div></div>
-        </div>
-        <div>
-          <span class="eyebrow">Active Plomberie 74 &agrave; {commune}</span>
-          <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; color:var(--navy); margin:10px 0 16px;">Un artisan de proximit&eacute;, &agrave; votre &eacute;coute.</h2>
-          <p style="color:var(--muted);">Bas&eacute; &agrave; {city}, j'interviens r&eacute;guli&egrave;rement &agrave; {commune} pour des travaux de plomberie, de chauffage et de r&eacute;novation de salle de bain, aupr&egrave;s des particuliers comme des professionnels.</p>
-          <ul class="about-list">
-            <li>{check} Plus de 10 ans d'exp&eacute;rience</li>
-            <li>{check} Travail soign&eacute; et durable</li>
-            <li>{check} Devis gratuit et sans engagement</li>
-            <li>{check} Garantie d&eacute;cennale et assurance professionnelle</li>
-          </ul>
-          <a class="btn btn-primary" href="contact.html">Demander un devis gratuit</a>
-        </div>
+      <div class="container">
+        <span class="eyebrow">Questions fr&eacute;quentes</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:800; color:var(--navy); margin:10px 0 18px;">Plombier &agrave; {commune} : vos questions</h2>
+        <div class="faq">{faq_html}</div>
       </div>
     </section>
 
     <section>
       <div class="container">
-        <span class="eyebrow">Zones voisines</span>
-        <h2 style="font-size:1.4rem; font-weight:800; color:var(--navy); margin:10px 0 20px;">Nous intervenons aussi pr&egrave;s de {commune}</h2>
+        <span class="eyebrow">Autour de {commune}</span>
+        <h2 style="font-size:1.4rem; font-weight:800; color:var(--navy); margin:10px 0 12px;">Communes voisines desservies</h2>
+        <p style="color:var(--muted); margin-bottom:20px;">Depuis {commune}, nous intervenons aussi &agrave; {voisines}, et dans les autres communes de notre secteur&nbsp;:</p>
         <div class="zone-grid">{chips}</div>
       </div>
     </section>
-    """.format(commune=commune, city=BIZ["city"], services_cards=services_cards, arrow=icon("icon-arrow.svg"),
-               stars=stars(), rating=BIZ["rating"], reviews=BIZ["reviews"],
-               check=icon("icon-check-green.svg"), chips=chips)
+    """.format(commune=esc(commune), intro=esc(info.get("intro", "")), contexte=esc(info.get("contexte", "")),
+               check=icon("icon-check-green.svg"), stars=stars(), rating=BIZ["rating"], reviews=BIZ["reviews"],
+               interventions_html=interventions_html, services_cards=services_cards,
+               conseil_html=("""<section{alt}>
+      <div class="container" style="max-width:860px;">
+        <span class="eyebrow">Le conseil de l'artisan</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:800; color:var(--navy); margin:10px 0 14px;">Bien entretenir sa plomberie &agrave; {c}</h2>
+        <p style="color:var(--muted);">{t}</p>
+      </div>
+    </section>""".format(alt="" if interventions else ' class="section-alt"', c=esc(commune), t=esc(conseil)) if conseil else ""), faq_html=faq_html,
+               voisines=voisines_html or "nos communes voisines", chips=chips)
     main += build_cta_banner()
 
     service_schema = {
         "@context": "https://schema.org", "@type": "Service",
         "serviceType": "Plomberie et chauffage",
         "name": "Plombier chauffagiste à " + commune,
-        "provider": {"@type": "Plumber", "name": BIZ["legal"]},
-        "areaServed": {"@type": "City", "name": commune},
+        "provider": {"@type": "Plumber", "name": BIZ["legal"], "url": BIZ["domain"]},
+        "areaServed": {"@type": "City", "name": commune, **({"postalCode": cp} if cp else {})},
     }
+    faq_schema = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}
 
+    desc = "Plombier chauffagiste à {c}{cp} : dépannage, chauffe-eau, chauffage, salle de bain. {t} Devis gratuit.".format(
+        c=commune, cp=(" ({})".format(cp) if cp else ""),
+        t=("Atelier sur place." if km == 0 else "À {} min de Thyez.".format(minutes)))
     return wrap_page(
-        title="Plombier chauffagiste à {} | {}".format(commune, BIZ["legal"]),
-        description="Active Plomberie 74, votre plombier chauffagiste à {}. Dépannage, installation et rénovation en plomberie et chauffage. Devis gratuit.".format(commune),
+        title="Plombier {c}{cp} – Chauffagiste | {legal}".format(c=commune, cp=(" ({})".format(cp) if cp else ""), legal=BIZ["legal"]),
+        description=desc,
         path="plombier-{}.html".format(slug), main_html=main, active="zones",
-        extra_schema=service_schema,
+        extra_schema=[service_schema, faq_schema],
     )
 
 # =================================================================
@@ -496,9 +558,18 @@ def page_commune(commune):
 # =================================================================
 def page_zones():
     chips = "".join('<a class="zone-chip" href="plombier-{slug}.html">{pin} {c}</a>'.format(slug=commune_slug(c), pin=icon("icon-pin.svg"), c=c) for c in COMMUNES)
+    from communes_contenu import COMMUNES_CONTENU as _CC
+    lignes = ""
+    for c in COMMUNES:
+        i = _CC.get(c, {})
+        delai = "Atelier sur place" if i.get("km", 0) == 0 else "environ {} km &middot; {} min".format(i.get("km"), i.get("min"))
+        nb = len(i.get("interventions", []))
+        lignes += '<tr><td><a href="plombier-{s}.html" style="color:var(--primary); font-weight:700;">Plombier {c}</a></td><td>{cp}</td><td>{d}</td><td>{n}</td></tr>'.format(
+            s=commune_slug(c), c=html.escape(c), cp=i.get("cp", ""), d=delai, n=("{} chantier{} r&eacute;cent{}".format(nb, "s" if nb > 1 else "", "s" if nb > 1 else "") if nb else "&mdash;"))
+    table = """<table class="hours-table" style="margin-top:28px;"><thead><tr><th style="text-align:left;">Commune</th><th style="text-align:left;">Code postal</th><th style="text-align:left;">Depuis Thyez</th><th style="text-align:left;">R&eacute;f&eacute;rences</th></tr></thead><tbody>{}</tbody></table>""".format(lignes)
     main = build_page_header(
         "Zones d'intervention", "Active Plomberie 74 intervient à {city} et dans un rayon de {radius} autour, en Haute-Savoie.".format(city=BIZ["city"], radius=BIZ["radius"]),
-        [("Accueil", "index.html"), ("Zones d'intervention", None)]
+        [("Accueil", "./"), ("Zones d'intervention", None)]
     ) + """
     <section>
       <div class="container">
@@ -507,7 +578,8 @@ def page_zones():
             <span class="eyebrow">Communes desservies</span>
             <h2 style="font-size:1.5rem; font-weight:800; color:var(--navy); margin:10px 0 20px;">Nos secteurs d'intervention</h2>
             <div class="zone-grid">{chips}</div>
-            <p style="color:var(--muted); font-size:.9rem; margin-top:18px;">Et les communes voisines dans un rayon de {radius} autour de {city}. Vous n'&ecirc;tes pas s&ucirc;r d'&ecirc;tre dans notre zone&nbsp;? <a href="contact.html" style="color:var(--primary); font-weight:700;">Contactez-nous</a>, nous vous r&eacute;pondrons rapidement.</p>
+            {table}
+            <p style="color:var(--muted); font-size:.9rem; margin-top:18px;">Temps de trajet indicatifs par la route depuis notre atelier de Thyez. Et les communes voisines dans un rayon de {radius} autour de {city}. Vous n'&ecirc;tes pas s&ucirc;r d'&ecirc;tre dans notre zone&nbsp;? <a href="contact.html" style="color:var(--primary); font-weight:700;">Contactez-nous</a>, nous vous r&eacute;pondrons rapidement.</p>
           </div>
           <div class="map-frame">
             <span class="icon-wrap">{pin}</span>
@@ -518,12 +590,12 @@ def page_zones():
         </div>
       </div>
     </section>
-    """.format(chips=chips, radius=BIZ["radius"], city=BIZ["city"], pin=icon("icon-pin.svg", "icon"),
+    """.format(chips=chips, table=table, radius=BIZ["radius"], city=BIZ["city"], pin=icon("icon-pin.svg", "icon"),
                zip=BIZ["address_zip"], phone_href=BIZ["phone_href"], phone_icon=icon("icon-phone-white.svg")) + build_cta_banner()
 
     return wrap_page(
         title="Zones d'intervention | Active Plomberie 74",
-        description="Active Plomberie 74 intervient à Thyez, Cluses, Scionzier, Marignier, Bonneville, Sallanches et dans toute la Haute-Savoie.",
+        description="Active Plomberie 74 intervient à Thyez, Cluses, Bonneville, Taninges, Sallanches, Samoëns et dans 14 communes de Haute-Savoie : délais et chantiers par commune.",
         path="zones-intervention.html", main_html=main, active="zones",
     )
 
@@ -533,7 +605,7 @@ def page_zones():
 def page_contact():
     main = build_page_header(
         "Contact", "Une question ou un projet ? Contactez-nous par téléphone, e-mail ou via le formulaire ci-dessous.",
-        [("Accueil", "index.html"), ("Contact", None)]
+        [("Accueil", "./"), ("Contact", None)]
     ) + """
     <section>
       <div class="container contact-grid">
@@ -618,7 +690,7 @@ def page_simulateur():
     main = build_page_header(
         "Simulateur de devis en ligne",
         "Estimez gratuitement le prix de vos travaux de plomberie et chauffage en 2 minutes, puis demandez votre devis précis à l'artisan.",
-        [("Accueil", "index.html"), ("Simulateur de devis", None)]
+        [("Accueil", "./"), ("Simulateur de devis", None)]
     ) + """
     <section>
       <div class="container sim-grid">
@@ -761,7 +833,7 @@ def page_simulateur():
 def page_mentions():
     main = build_page_header(
         "Mentions légales", "Informations légales relatives au site et à l'entreprise Active Plomberie 74.",
-        [("Accueil", "index.html"), ("Mentions légales", None)]
+        [("Accueil", "./"), ("Mentions légales", None)]
     ) + """
     <section>
       <div class="container legal-body">
@@ -821,7 +893,7 @@ def build_all():
         (["simulateur-devis.html"] if SIMULATEUR_PUBLIC else []) + ["contact.html", "mentions-legales.html"]
     urls = ""
     for p in pages:
-        loc = BIZ["domain"] + "/" + p
+        loc = BIZ["domain"] + "/" + ("" if p == "index.html" else p)
         priority = "1.0" if p == "index.html" else "0.7"
         urls += "  <url><loc>{loc}</loc><changefreq>monthly</changefreq><priority>{prio}</priority></url>\n".format(loc=loc, prio=priority)
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'.format(urls=urls)

@@ -116,17 +116,17 @@ def local_business_schema():
             "addressLocality": "Thyez",
             "addressCountry": "FR",
         },
-        "areaServed": {"@type": "GeoCircle", "geoMidpoint": {"@type": "GeoCoordinates", "addressCountry": "FR"}},
-        "openingHoursSpecification": [{
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "opens": "00:00", "closes": "23:59",
-        }],
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": BIZ["rating"],
-            "reviewCount": BIZ["reviews"],
-        },
+        # Coordonnées approximatives de l'atelier (rue des Sorbiers, Thyez)
+        "geo": {"@type": "GeoCoordinates", "latitude": 46.0826, "longitude": 6.5376},
+        # Communes desservies = les pages villes du site (liste unique, _data.json)
+        "areaServed": [{"@type": "City", "name": c} for c in COMMUNES],
+        # Mêmes horaires que la page contact (lun.-ven. 7h-20h, sam. 8h-18h)
+        "openingHoursSpecification": [
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "20:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "08:00", "closes": "18:00"},
+        ],
+        # Pas d'aggregateRating : Google ignore (voire sanctionne) une note
+        # auto-déclarée par l'entreprise sur son propre site.
         "priceRange": "€€",
     }
 
@@ -146,7 +146,7 @@ def build_topbar():
            mail=icon("icon-mail.svg", "icon"), email=BIZ["email"])
 
 NAV_ITEMS = [
-    ("index.html", "accueil", "Accueil"),
+    ("./", "accueil", "Accueil"),
     ("realisations.html", "realisations", "Réalisations"),
     ("avis-clients.html", "avis", "Avis clients"),
     ("a-propos.html", "apropos", "À propos"),
@@ -187,7 +187,7 @@ def build_header(active, active_service=None):
     return """<header class="site-header">
   <div class="nav-overlay"></div>
     <div class="container nav">
-      <a href="index.html" class="brand brand-photo">
+      <a href="./" class="brand brand-photo">
         {logo}
         <span class="brand-tagline-only"><small>Plombier &middot; Chauffagiste &middot; Thyez</small></span>
       </a>
@@ -219,7 +219,7 @@ def build_footer():
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="brand brand-photo">
+          <a href="./" class="brand brand-photo">
             <img src="images/logo-real-transparent.png" alt="Logo {name}" class="brand-logo">
           </a>
           <p>Plombier chauffagiste &agrave; {city} &mdash; Plomberie, chauffage, sanitaire. D&eacute;pannage, installation et r&eacute;novation en Haute-Savoie.</p>
@@ -319,7 +319,7 @@ def build_cta_banner():
 def wrap_page(title, description, path, main_html, active, active_service=None, extra_schema=None, include_topbar=True, extra_head="", robots="index, follow"):
     schemas = [local_business_schema()]
     if extra_schema:
-        schemas.append(extra_schema)
+        schemas.extend(extra_schema if isinstance(extra_schema, list) else [extra_schema])
     head = build_head(title, description, path, schemas, extra_head, robots)
     topbar = build_topbar() if include_topbar else ""
     header = build_header(active, active_service)

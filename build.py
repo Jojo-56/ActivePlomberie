@@ -25,8 +25,7 @@ BIZ = {
     "domain": "https://www.activeplomberie74.fr",
 }
 
-COMMUNES = ["Thyez", "Cluses", "Scionzier", "Marignier", "Bonneville", "Sallanches",
-            "La Roche-sur-Foron", "Annemasse", "Marnaz", "Vougy"]
+COMMUNES = ["Thyez", "Marnaz", "Marignier", "Cluses", "Scionzier", "Vougy", "Bonneville", "Taninges", "Saint-Pierre-en-Faucigny", "Sallanches", "La Roche-sur-Foron", "Samoëns", "Annemasse", "La Clusaz"]
 
 SERVICES = [
     {
