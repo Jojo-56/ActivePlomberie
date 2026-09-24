@@ -383,7 +383,7 @@ def page_apropos():
           <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; color:var(--navy); margin:10px 0 16px;">Un artisan de confiance, proche de chez vous.</h2>
           <p style="color:var(--muted);">Install&eacute; &agrave; {city}, je mets mon exp&eacute;rience au service des particuliers et professionnels de Haute-Savoie pour tous leurs travaux de plomberie, chauffage et r&eacute;novation de salle de bain. Chaque intervention est r&eacute;alis&eacute;e avec le m&ecirc;me soin, du simple d&eacute;pannage au chantier de r&eacute;novation compl&egrave;te.</p>
           <p style="color:var(--muted); margin-top:12px;">Mon objectif&nbsp;: un travail propre, durable, et une relation de confiance avec chacun de mes clients &mdash; d'o&ugrave; une note de {rating}/5 sur {reviews} avis Google.</p>
-          <p style="color:var(--muted); margin-top:12px;">Pour des devis clairs et rapides, je travaille avec <a href="https://alyapro.com/artisans/active-plomberie-74">Alya Pro, le logiciel de devis et de facturation des artisans</a>&nbsp;: retrouvez aussi ma fiche dans <a href="https://alyapro.com/artisans">l'annuaire des artisans Alya Pro</a>.</p>
+          <p style="color:var(--muted); margin-top:12px;">Pour des devis clairs et rapides, je travaille avec <a href="https://alyapro.com/entreprises-btp/active-plomberie-74">Alya Pro, le logiciel de devis et de facturation des artisans</a>&nbsp;: retrouvez aussi ma fiche dans <a href="https://alyapro.com/entreprises-btp">l'annuaire des entreprises BTP Alya Pro</a>.</p>
           <ul class="about-list">
             <li>{check} Plus de 10 ans d'exp&eacute;rience</li>
             <li>{check} Travail soign&eacute; et durable</li>

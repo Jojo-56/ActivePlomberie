@@ -257,7 +257,7 @@ def build_footer():
       </div>
       <div class="footer-bottom">
         <span>&copy; <span class="js-year">{year}</span> {legal} &mdash; Tous droits r&eacute;serv&eacute;s.</span>
-        <span><a href="mentions-legales.html">Mentions l&eacute;gales</a> &middot; Site r&eacute;alis&eacute; avec soin en Haute-Savoie &middot; Devis et factures avec <a href="https://alyapro.com/artisans/active-plomberie-74">Alya Pro</a></span>
+        <span><a href="mentions-legales.html">Mentions l&eacute;gales</a> &middot; Site r&eacute;alis&eacute; avec soin en Haute-Savoie &middot; Devis et factures avec <a href="https://alyapro.com/entreprises-btp/active-plomberie-74">Alya Pro</a></span>
       </div>
     </div>
   </footer>
