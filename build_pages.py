@@ -69,7 +69,7 @@ def photo_card_single(image, title, subtitle):
 # -----------------------------------------------------------------
 # HEAD
 # -----------------------------------------------------------------
-def build_head(title, description, path, schema_objects=None):
+def build_head(title, description, path, schema_objects=None, extra_head=""):
     canonical = BIZ["domain"] + "/" + path
     schema_html = ""
     if schema_objects:
@@ -88,8 +88,8 @@ def build_head(title, description, path, schema_objects=None):
   <meta property="og:locale" content="fr_FR">
   <meta name="theme-color" content="#1d6fe0">
   <link rel="icon" href="images/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">{schema}
-""".format(title=html.escape(title), desc=html.escape(description), canonical=canonical, schema=schema_html)
+  <link rel="stylesheet" href="css/style.css">{extra}{schema}
+""".format(title=html.escape(title), desc=html.escape(description), canonical=canonical, schema=schema_html, extra=extra_head)
 
 # -----------------------------------------------------------------
 # LocalBusiness schema (utilisé sur toutes les pages)
@@ -155,6 +155,8 @@ def build_services_dropdown(active_slug=None):
         links += '<li><a class="{cls}" href="{slug}.html">{icon}{title}</a></li>'.format(
             cls=cls.strip(), slug=s["slug"], icon=icon(s["icon"]), title=s["title"])
     links += '<li><a href="nos-services.html">{icon}Tous nos services</a></li>'.format(icon=icon("icon-arrow.svg"))
+    links += '<li><a class="{cls}" href="simulateur-devis.html">{icon}Simulateur de devis</a></li>'.format(
+        cls="active" if active_slug == "simulateur" else "", icon=icon("icon-doc.svg"))
     return links
 
 def build_header(active, active_service=None):
@@ -230,6 +232,7 @@ def build_footer():
             <li><a href="a-propos.html">&Agrave; propos</a></li>
             <li><a href="realisations.html">R&eacute;alisations</a></li>
             <li><a href="avis-clients.html">Avis clients</a></li>
+            <li><a href="simulateur-devis.html">Simulateur de devis</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="mentions-legales.html">Mentions l&eacute;gales</a></li>
           </ul>
@@ -306,11 +309,11 @@ def build_cta_banner():
 # -----------------------------------------------------------------
 # Page wrapper
 # -----------------------------------------------------------------
-def wrap_page(title, description, path, main_html, active, active_service=None, extra_schema=None, include_topbar=True):
+def wrap_page(title, description, path, main_html, active, active_service=None, extra_schema=None, include_topbar=True, extra_head=""):
     schemas = [local_business_schema()]
     if extra_schema:
         schemas.append(extra_schema)
-    head = build_head(title, description, path, schemas)
+    head = build_head(title, description, path, schemas, extra_head)
     topbar = build_topbar() if include_topbar else ""
     header = build_header(active, active_service)
     footer = build_footer()

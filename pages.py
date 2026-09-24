@@ -46,7 +46,7 @@ def page_index():
           <p class="lead">D&eacute;pannage, installations et r&eacute;novations de plomberie et chauffage dans toute la Haute-Savoie.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="{phone_href}">{phone_icon} Appeler maintenant</a>
-            <a class="btn btn-outline" href="contact.html">Demander un devis</a>
+            <a class="btn btn-outline" href="simulateur-devis.html">Estimer mon devis en ligne</a>
           </div>
           <div class="trust-row">
             <span class="item"><span class="icon-wrap">{doc}</span> Devis gratuit<br>et sans engagement</span>
@@ -256,6 +256,7 @@ def page_service(s):
             <p>Besoin d'un devis ou d'une intervention ?</p>
             <a href="{phone_href}">{phone}</a>
             <a class="btn btn-outline-light btn-block" href="contact.html">Demander un devis gratuit</a>
+            <a class="btn btn-primary btn-block" href="simulateur-devis.html" style="margin-top:10px;">Estimer mon devis en ligne</a>
           </div>
         </aside>
       </div>
@@ -595,6 +596,164 @@ def page_contact():
     )
 
 # =================================================================
+# SIMULATEUR DE DEVIS (estimation calculée par Alya, voir js/simulateur.js)
+# =================================================================
+SIMULATEUR_API = "https://alyapro.com/api/site-simulateur"
+SIMULATEUR_CLE = "active-plomberie-74"
+
+def page_simulateur():
+    types = [
+        ("depannage", "Dépannage / fuite", "icon-droplet.svg"),
+        ("chauffe-eau", "Chauffe-eau", "icon-water-heater.svg"),
+        ("chauffage", "Chauffage", "icon-radiator.svg"),
+        ("salle-de-bain", "Salle de bain", "icon-bathtub.svg"),
+        ("sanitaires", "WC, lavabo, douche", "icon-tools.svg"),
+        ("autre", "Autre projet", "icon-doc.svg"),
+    ]
+    types_html = ""
+    for slug, label, ic in types:
+        types_html += ('<button type="button" class="sim-type" data-type="' + slug + '" data-label="' + html.escape(label) +
+                       '" aria-pressed="false"><span class="icon-wrap">' + icon(ic) + '</span>' + html.escape(label) + '</button>')
+
+    main = build_page_header(
+        "Simulateur de devis en ligne",
+        "Estimez gratuitement le prix de vos travaux de plomberie et chauffage en 2 minutes, puis envoyez vos photos pour recevoir un devis précis.",
+        [("Accueil", "index.html"), ("Simulateur de devis", None)]
+    ) + """
+    <section>
+      <div class="container sim-grid">
+        <div id="simulateur" class="sim-card" data-api=\"""" + SIMULATEUR_API + """\" data-cle=\"""" + SIMULATEUR_CLE + """\">
+          <div class="sim-steps" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+
+          <!-- Étape 1 : description des travaux -->
+          <div class="sim-step" data-step="form">
+            <h2>Quels travaux souhaitez-vous réaliser&nbsp;?</h2>
+            <p class="sim-sub">Aucune coordonnée demandée à cette étape. Estimation gratuite et sans engagement.</p>
+            <form id="sim-form" novalidate>
+              <div class="sim-types" role="group" aria-label="Type de travaux">""" + types_html + """</div>
+              <div class="sim-details" hidden>
+                <div class="sim-fields" id="sim-questions"></div>
+                <div class="sim-fields">
+                  <div class="field"><label for="sim-logement">Type de logement</label>
+                    <select id="sim-logement"><option value="">— Choisir —</option><option>Maison</option><option>Appartement</option><option>Local professionnel</option></select></div>
+                  <div class="field"><label for="sim-age">Âge du logement</label>
+                    <select id="sim-age"><option value="">— Choisir —</option><option>Plus de 2 ans</option><option>Moins de 2 ans (neuf)</option></select></div>
+                  <div class="field full"><label for="sim-cp">Code postal du chantier</label>
+                    <input type="text" id="sim-cp" inputmode="numeric" maxlength="5" placeholder="74300" autocomplete="postal-code"></div>
+                  <div class="field full"><label for="sim-description">Décrivez vos travaux *</label>
+                    <textarea id="sim-description" maxlength="2000" required></textarea>
+                    <p class="sim-hint">Plus votre description est précise (dimensions, équipement actuel, accès…), plus l'estimation sera juste.</p></div>
+                </div>
+                <div class="sim-error" id="sim-error-1" role="alert"></div>
+                <button type="submit" class="btn btn-primary btn-block">Calculer mon estimation</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Étape 2a : calcul en cours -->
+          <div class="sim-step sim-loading" data-step="loading" hidden aria-live="polite">
+            <div class="sim-spinner"></div>
+            <strong>Calcul de votre estimation…</strong>
+            <p id="sim-loading-msg">Analyse de votre demande…</p>
+            <div class="sim-progress"><span></span></div>
+            <p style="font-size:.8rem; margin-top:14px;">Cela prend généralement 20 à 40 secondes.</p>
+          </div>
+
+          <!-- Étape 2b : résultat -->
+          <div class="sim-step" data-step="result" hidden>
+            <h2 id="sim-result-title">Votre estimation</h2>
+            <p class="sim-sub">Fourchette de prix indicative pour vos travaux, fournitures et main d'œuvre comprises.</p>
+            <div class="sim-result-box" aria-live="polite">
+              <small>Estimation indicative</small>
+              <span class="sim-range" id="sim-range"></span>
+              <span class="sim-ttc">TTC, fournitures et pose comprises</span>
+            </div>
+            <div id="sim-postes-wrap">
+              <p style="font-weight:700; color:var(--navy); margin-bottom:10px;">Ce que comprend cette estimation&nbsp;:</p>
+              <ul class="sim-postes" id="sim-postes"></ul>
+            </div>
+            <div class="sim-disclaimer">
+              """ + icon("icon-shield.svg") + """
+              <div><strong>Prix estimatif, non contractuel.</strong> Cette fourchette est calculée automatiquement à partir de votre description.
+              Le prix définitif sera établi et validé par Active Plomberie 74 dans un devis gratuit, après examen de vos photos et, si besoin, une visite sur place.</div>
+            </div>
+            <p style="font-weight:700; color:var(--navy); margin-bottom:12px;">Envoyez 2 ou 3 photos pour que l'artisan affine votre devis&nbsp;:</p>
+            <div class="sim-actions">
+              <button type="button" class="btn btn-primary" id="sim-affiner">Affiner mon devis avec des photos</button>
+              <button type="button" class="btn btn-outline" id="sim-modifier">Modifier ma demande</button>
+            </div>
+          </div>
+
+          <!-- Étape 3 : photos + coordonnées -->
+          <div class="sim-step" data-step="contact" hidden>
+            <h2>Affinez votre devis</h2>
+            <p class="sim-sub">Ajoutez 2 ou 3 photos (vue d'ensemble, équipement actuel, zone de travaux) et vos coordonnées&nbsp;: Active Plomberie 74 vous recontacte avec un devis précis.</p>
+            <form id="sim-contact" novalidate>
+              <div class="sim-drop" tabindex="0" role="button" aria-label="Ajouter des photos">
+                """ + icon("icon-doc.svg") + """
+                <strong>Ajouter des photos</strong>
+                <span>Jusqu'à 3 photos &middot; JPEG ou PNG &middot; depuis votre téléphone ou ordinateur</span>
+                <input type="file" id="sim-photos" accept="image/*" multiple>
+              </div>
+              <div class="sim-thumbs"></div>
+              <div class="form-row">
+                <div class="field"><label for="sim-c-nom">Nom complet *</label><input type="text" id="sim-c-nom" autocomplete="name" required></div>
+                <div class="field"><label for="sim-c-tel">Téléphone *</label><input type="tel" id="sim-c-tel" autocomplete="tel" required></div>
+              </div>
+              <div class="field"><label for="sim-c-email">E-mail <span style="font-weight:400; color:var(--muted);">(pour recevoir le récapitulatif)</span></label><input type="email" id="sim-c-email" autocomplete="email"></div>
+              <div class="form-row">
+                <div class="field"><label for="sim-c-cp">Code postal</label><input type="text" id="sim-c-cp" inputmode="numeric" maxlength="5" autocomplete="postal-code"></div>
+                <div class="field"><label for="sim-c-ville">Ville</label><input type="text" id="sim-c-ville" autocomplete="address-level2"></div>
+              </div>
+              <div class="field"><label for="sim-c-message">Précisions (disponibilités, accès…)</label><textarea id="sim-c-message" maxlength="1500" style="min-height:80px;"></textarea></div>
+              <div class="sim-hp" aria-hidden="true"><label for="sim-c-website">Site web</label><input type="text" id="sim-c-website" tabindex="-1" autocomplete="off"></div>
+              <label class="sim-check"><input type="checkbox" id="sim-c-ok"> <span>J'accepte d'être recontacté par Active Plomberie 74 au sujet de ma demande. Mes informations et photos sont transmises uniquement à l'artisan pour établir mon devis.</span></label>
+              <div class="sim-error" id="sim-error-3" role="alert"></div>
+              <div class="sim-actions">
+                <button type="submit" class="btn btn-primary" id="sim-envoyer">Envoyer à l'artisan</button>
+                <button type="button" class="btn btn-outline" id="sim-retour">Retour</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Confirmation -->
+          <div class="sim-step sim-done" data-step="done" hidden>
+            <span class="icon-wrap">""" + icon("icon-check-green.svg") + """</span>
+            <h2>Demande envoyée&nbsp;!</h2>
+            <p>Merci, Active Plomberie 74 a bien reçu votre demande et vos photos. Vous serez recontacté rapidement pour valider votre devis.</p>
+            <p>Pour une urgence, appelez directement le <a href=\"""" + BIZ["phone_href"] + """\"><strong>""" + BIZ["phone_display"] + """</strong></a>.</p>
+          </div>
+          <p class="sim-powered">Estimation calculée avec Alya, le logiciel de devis de votre artisan.</p>
+        </div>
+
+        <aside class="sim-aside">
+          <div class="sim-how">
+            <h3>Comment ça marche&nbsp;?</h3>
+            <ol>
+              <li><div><strong>Décrivez vos travaux</strong>Type d'intervention, équipement, dimensions&hellip;</div></li>
+              <li><div><strong>Obtenez une fourchette de prix</strong>Estimation instantanée basée sur les tarifs de l'artisan.</div></li>
+              <li><div><strong>Envoyez 2 ou 3 photos</strong>L'artisan affine et valide votre devis, gratuitement.</div></li>
+            </ol>
+          </div>
+          <div class="sim-callbox">
+            <p>Une urgence ou une question&nbsp;? Appelez directement&nbsp;:</p>
+            <a class="tel" href=\"""" + BIZ["phone_href"] + """\">""" + BIZ["phone_display"] + """</a>
+            <small>Devis gratuit et sans engagement</small>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <script src="js/simulateur.js" defer></script>
+    """
+
+    return wrap_page(
+        title="Simulateur de devis plomberie en ligne | Active Plomberie 74",
+        description="Estimez gratuitement le prix de vos travaux de plomberie, chauffe-eau, chauffage ou salle de bain en Haute-Savoie, puis envoyez vos photos pour un devis précis.",
+        path="simulateur-devis.html", main_html=main, active="services", active_service="simulateur",
+        extra_head='\n  <link rel="stylesheet" href="css/simulateur.css">',
+    )
+
+# =================================================================
 # MENTIONS LÉGALES
 # =================================================================
 def page_mentions():
@@ -644,6 +803,7 @@ def build_all():
     write_page("zones-intervention.html", page_zones())
     for c in COMMUNES:
         write_page("plombier-{}.html".format(commune_slug(c)), page_commune(c))
+    write_page("simulateur-devis.html", page_simulateur())
     write_page("contact.html", page_contact())
     write_page("mentions-legales.html", page_mentions())
 
@@ -656,7 +816,7 @@ def build_all():
     pages = ["index.html", "nos-services.html"] + [s["slug"] + ".html" for s in SERVICES] + \
         ["realisations.html", "avis-clients.html", "a-propos.html", "zones-intervention.html"] + \
         ["plombier-{}.html".format(commune_slug(c)) for c in COMMUNES] + \
-        ["contact.html", "mentions-legales.html"]
+        ["simulateur-devis.html", "contact.html", "mentions-legales.html"]
     urls = ""
     for p in pages:
         loc = BIZ["domain"] + "/" + p
