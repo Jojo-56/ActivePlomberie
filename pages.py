@@ -439,8 +439,9 @@ def page_commune(commune):
         s=commune_slug(c), pin=icon("icon-pin.svg"), c=esc(c)) for c in autres)
 
     trajet = ("Notre atelier est situ&eacute; &agrave; {commune}.".format(commune=esc(commune)) if km == 0 else
+              "Commune voisine de {city}, &agrave; quelques minutes de notre atelier.".format(city=BIZ["city"]) if km is None else
               "&Agrave; environ {km}&nbsp;km de notre atelier de {city}, soit une {mn}&nbsp;minutes de route.".format(
-                  km=km, city=BIZ["city"], mn=("dizaine de" if minutes <= 10 else "quinzaine de" if minutes <= 17 else "vingtaine de" if minutes <= 22 else "trentaine de" if minutes <= 35 else "cinquantaine de")))
+                  km=str(round(km)) if km else km, city=BIZ["city"], mn=("dizaine de" if minutes <= 10 else "quinzaine de" if minutes <= 17 else "vingtaine de" if minutes <= 22 else "trentaine de" if minutes <= 35 else "cinquantaine de")))
 
     interventions = info.get("interventions", [])
     interventions_html = ""
@@ -479,6 +480,7 @@ def page_commune(commune):
           <h2 style="font-size:clamp(1.6rem,3vw,2.2rem); font-weight:800; color:var(--navy); margin:10px 0 16px;">Votre plombier chauffagiste &agrave; {commune}</h2>
           <p style="color:var(--muted);">{intro}</p>
           <p style="color:var(--muted); margin-top:12px;">{contexte}</p>
+          {reperes_html}
           <ul class="about-list">
             <li>{check} Devis gratuit et sans engagement</li>
             <li>{check} Garantie d&eacute;cennale et assurance professionnelle</li>
@@ -520,7 +522,9 @@ def page_commune(commune):
         <div class="zone-grid">{chips}</div>
       </div>
     </section>
-    """.format(commune=esc(commune), intro=esc(info.get("intro", "")), contexte=esc(info.get("contexte", "")),
+    """.format(reperes_html=("""<p style="font-size:.88rem; color:var(--muted); margin-top:12px; padding:12px 14px; background:var(--bg-alt); border-radius:10px;"><strong style="color:var(--navy);">{c} en bref&nbsp;:</strong> {r} <a href="https://fr.wikipedia.org/wiki/{w}" rel="noopener" target="_blank" style="color:var(--primary);">Source</a></p>""".format(
+                   c=esc(commune), r=esc(info["reperes"]), w=info.get("wiki", "")) if info.get("reperes") else ""),
+               commune=esc(commune), intro=esc(info.get("intro", "")), contexte=esc(info.get("contexte", "")),
                check=icon("icon-check-green.svg"), stars=stars(), rating=BIZ["rating"], reviews=BIZ["reviews"],
                interventions_html=interventions_html, services_cards=services_cards,
                conseil_html=("""<section{alt}>
@@ -545,7 +549,7 @@ def page_commune(commune):
 
     desc = "Plombier chauffagiste à {c}{cp} : dépannage, chauffe-eau, chauffage, salle de bain. {t} Devis gratuit.".format(
         c=commune, cp=(" ({})".format(cp) if cp else ""),
-        t=("Atelier sur place." if km == 0 else "À {} min de Thyez.".format(minutes)))
+        t=("Atelier sur place." if km == 0 else "Voisin de Thyez." if km is None else "À {} min de Thyez.".format(minutes)))
     return wrap_page(
         title="Plombier {c}{cp} – Chauffagiste | {legal}".format(c=commune, cp=(" ({})".format(cp) if cp else ""), legal=BIZ["legal"]),
         description=desc,
@@ -562,7 +566,8 @@ def page_zones():
     lignes = ""
     for c in COMMUNES:
         i = _CC.get(c, {})
-        delai = "Atelier sur place" if i.get("km", 0) == 0 else "environ {} km &middot; {} min".format(i.get("km"), i.get("min"))
+        km = i.get("km", 0)
+        delai = "Atelier sur place" if km == 0 else "Commune voisine" if km is None else "environ {} km &middot; {} min".format(round(km), i.get("min"))
         nb = len(i.get("interventions", []))
         lignes += '<tr><td><a href="plombier-{s}.html" style="color:var(--primary); font-weight:700;">Plombier {c}</a></td><td>{cp}</td><td>{d}</td><td>{n}</td></tr>'.format(
             s=commune_slug(c), c=html.escape(c), cp=i.get("cp", ""), d=delai, n=("{} chantier{} r&eacute;cent{}".format(nb, "s" if nb > 1 else "", "s" if nb > 1 else "") if nb else "&mdash;"))

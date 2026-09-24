@@ -116,8 +116,8 @@ def local_business_schema():
             "addressLocality": "Thyez",
             "addressCountry": "FR",
         },
-        # Coordonnées approximatives de l'atelier (rue des Sorbiers, Thyez)
-        "geo": {"@type": "GeoCoordinates", "latitude": 46.0826, "longitude": 6.5376},
+        # Coordonnées de Thyez (l-itineraire.com) — atelier rue des Sorbiers
+        "geo": {"@type": "GeoCoordinates", "latitude": 46.0946, "longitude": 6.5378},
         # Communes desservies = les pages villes du site (liste unique, _data.json)
         "areaServed": [{"@type": "City", "name": c} for c in COMMUNES],
         # Mêmes horaires que la page contact (lun.-ven. 7h-20h, sam. 8h-18h)
