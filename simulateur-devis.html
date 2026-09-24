@@ -6,7 +6,7 @@
   <title>Simulateur de devis plomberie en ligne | Active Plomberie 74</title>
   <meta name="description" content="Estimez gratuitement le prix de vos travaux de plomberie, chauffe-eau, chauffage ou salle de bain en Haute-Savoie, puis envoyez vos photos pour un devis précis.">
   <link rel="canonical" href="https://www.activeplomberie74.fr/simulateur-devis.html">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="noindex, nofollow">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Simulateur de devis plomberie en ligne | Active Plomberie 74">
   <meta property="og:description" content="Estimez gratuitement le prix de vos travaux de plomberie, chauffe-eau, chauffage ou salle de bain en Haute-Savoie, puis envoyez vos photos pour un devis précis.">
@@ -35,7 +35,7 @@
         <span class="brand-tagline-only"><small>Plombier &middot; Chauffagiste &middot; Thyez</small></span>
       </a>
       <ul class="nav-links"><li><a class="" href="index.html">Accueil</a></li><li class="has-dropdown"><a class="active" href="nos-services.html">Nos services <img src="images/icon-chevron-muted.svg" class="icon chev" alt="" loading="lazy"></a>
-      <ul class="dropdown"><li><a class="" href="depannage-plomberie.html"><img src="images/icon-droplet.svg" class="icon" alt="" loading="lazy">Dépannage plomberie</a></li><li><a class="" href="chauffage.html"><img src="images/icon-radiator.svg" class="icon" alt="" loading="lazy">Chauffage</a></li><li><a class="" href="chauffe-eau.html"><img src="images/icon-water-heater.svg" class="icon" alt="" loading="lazy">Chauffe-eau</a></li><li><a class="" href="salle-de-bain.html"><img src="images/icon-bathtub.svg" class="icon" alt="" loading="lazy">Salle de bain</a></li><li><a href="nos-services.html"><img src="images/icon-arrow.svg" class="icon" alt="" loading="lazy">Tous nos services</a></li><li><a class="active" href="simulateur-devis.html"><img src="images/icon-doc.svg" class="icon" alt="" loading="lazy">Simulateur de devis</a></li></ul>
+      <ul class="dropdown"><li><a class="" href="depannage-plomberie.html"><img src="images/icon-droplet.svg" class="icon" alt="" loading="lazy">Dépannage plomberie</a></li><li><a class="" href="chauffage.html"><img src="images/icon-radiator.svg" class="icon" alt="" loading="lazy">Chauffage</a></li><li><a class="" href="chauffe-eau.html"><img src="images/icon-water-heater.svg" class="icon" alt="" loading="lazy">Chauffe-eau</a></li><li><a class="" href="salle-de-bain.html"><img src="images/icon-bathtub.svg" class="icon" alt="" loading="lazy">Salle de bain</a></li><li><a href="nos-services.html"><img src="images/icon-arrow.svg" class="icon" alt="" loading="lazy">Tous nos services</a></li></ul>
     </li><li><a class="" href="realisations.html">Réalisations</a></li><li><a class="" href="avis-clients.html">Avis clients</a></li><li><a class="" href="a-propos.html">À propos</a></li><li><a class="" href="zones-intervention.html">Zones d'intervention</a></li><li><a class="" href="contact.html">Contact</a></li></ul>
       <div class="nav-cta">
         <div class="nav-phone">
@@ -51,7 +51,7 @@
     <div class="container">
       <div class="breadcrumb"><a href="index.html">Accueil</a> &rarr; <span>Simulateur de devis</span></div>
       <h1>Simulateur de devis en ligne</h1>
-      <p>Estimez gratuitement le prix de vos travaux de plomberie et chauffage en 2 minutes, puis envoyez vos photos pour recevoir un devis précis.</p>
+      <p>Estimez gratuitement le prix de vos travaux de plomberie et chauffage en 2 minutes, puis demandez votre devis précis à l'artisan.</p>
     </div>
   </section>
 
@@ -112,25 +112,19 @@
               <div><strong>Prix estimatif, non contractuel.</strong> Cette fourchette est calculée automatiquement à partir de votre description.
               Le prix définitif sera établi et validé par Active Plomberie 74 dans un devis gratuit, après examen de vos photos et, si besoin, une visite sur place.</div>
             </div>
-            <p style="font-weight:700; color:var(--navy); margin-bottom:12px;">Envoyez 2 ou 3 photos pour que l'artisan affine votre devis&nbsp;:</p>
+            <p style="font-weight:700; color:var(--navy); margin-bottom:4px;">Vous souhaitez un devis précis&nbsp;?</p>
+            <p class="sim-sub" style="margin-bottom:14px;">Laissez vos coordonnées, Active Plomberie 74 vous recontacte. Vous pourrez aussi joindre des photos (facultatif).</p>
             <div class="sim-actions">
-              <button type="button" class="btn btn-primary" id="sim-affiner">Affiner mon devis avec des photos</button>
+              <button type="button" class="btn btn-primary" id="sim-affiner">Recevoir mon devis précis</button>
               <button type="button" class="btn btn-outline" id="sim-modifier">Modifier ma demande</button>
             </div>
           </div>
 
           <!-- Étape 3 : photos + coordonnées -->
           <div class="sim-step" data-step="contact" hidden>
-            <h2>Affinez votre devis</h2>
-            <p class="sim-sub">Ajoutez 2 ou 3 photos (vue d'ensemble, équipement actuel, zone de travaux) et vos coordonnées&nbsp;: Active Plomberie 74 vous recontacte avec un devis précis.</p>
+            <h2>Recevoir mon devis précis</h2>
+            <p class="sim-sub">Indiquez vos coordonnées&nbsp;: Active Plomberie 74 vous recontacte pour établir et valider votre devis. Les photos sont facultatives, mais elles aident l'artisan à être plus précis.</p>
             <form id="sim-contact" novalidate>
-              <div class="sim-drop" tabindex="0" role="button" aria-label="Ajouter des photos">
-                <img src="images/icon-doc.svg" class="icon" alt="" loading="lazy">
-                <strong>Ajouter des photos</strong>
-                <span>Jusqu'à 3 photos &middot; JPEG ou PNG &middot; depuis votre téléphone ou ordinateur</span>
-                <input type="file" id="sim-photos" accept="image/*" multiple>
-              </div>
-              <div class="sim-thumbs"></div>
               <div class="form-row">
                 <div class="field"><label for="sim-c-nom">Nom complet *</label><input type="text" id="sim-c-nom" autocomplete="name" required></div>
                 <div class="field"><label for="sim-c-tel">Téléphone *</label><input type="tel" id="sim-c-tel" autocomplete="tel" required></div>
@@ -141,6 +135,13 @@
                 <div class="field"><label for="sim-c-ville">Ville</label><input type="text" id="sim-c-ville" autocomplete="address-level2"></div>
               </div>
               <div class="field"><label for="sim-c-message">Précisions (disponibilités, accès…)</label><textarea id="sim-c-message" maxlength="1500" style="min-height:80px;"></textarea></div>
+              <div class="sim-drop" tabindex="0" role="button" aria-label="Ajouter des photos">
+                <img src="images/icon-doc.svg" class="icon" alt="" loading="lazy">
+                <strong>Ajouter des photos <span style="font-weight:400; color:var(--muted);">(facultatif)</span></strong>
+                <span>Jusqu'à 3 photos (vue d'ensemble, équipement actuel…) &middot; JPEG ou PNG &middot; depuis votre téléphone ou ordinateur</span>
+                <input type="file" id="sim-photos" accept="image/*" multiple>
+              </div>
+              <div class="sim-thumbs"></div>
               <div class="sim-hp" aria-hidden="true"><label for="sim-c-website">Site web</label><input type="text" id="sim-c-website" tabindex="-1" autocomplete="off"></div>
               <label class="sim-check"><input type="checkbox" id="sim-c-ok"> <span>J'accepte d'être recontacté par Active Plomberie 74 au sujet de ma demande. Mes informations et photos sont transmises uniquement à l'artisan pour établir mon devis.</span></label>
               <div class="sim-error" id="sim-error-3" role="alert"></div>
@@ -155,7 +156,7 @@
           <div class="sim-step sim-done" data-step="done" hidden>
             <span class="icon-wrap"><img src="images/icon-check-green.svg" class="icon" alt="" loading="lazy"></span>
             <h2>Demande envoyée&nbsp;!</h2>
-            <p>Merci, Active Plomberie 74 a bien reçu votre demande et vos photos. Vous serez recontacté rapidement pour valider votre devis.</p>
+            <p>Merci, Active Plomberie 74 a bien reçu votre demande. Vous serez recontacté rapidement pour valider votre devis.</p>
             <p>Pour une urgence, appelez directement le <a href="tel:+33604670943"><strong>06 04 67 09 43</strong></a>.</p>
           </div>
           <p class="sim-powered">Estimation calculée avec Alya, le logiciel de devis de votre artisan.</p>
@@ -167,7 +168,7 @@
             <ol>
               <li><div><strong>Décrivez vos travaux</strong>Type d'intervention, équipement, dimensions&hellip;</div></li>
               <li><div><strong>Obtenez une fourchette de prix</strong>Estimation instantanée basée sur les tarifs de l'artisan.</div></li>
-              <li><div><strong>Envoyez 2 ou 3 photos</strong>L'artisan affine et valide votre devis, gratuitement.</div></li>
+              <li><div><strong>Demandez votre devis précis</strong>Laissez vos coordonnées (et des photos si vous le souhaitez)&nbsp;: l'artisan valide votre devis, gratuitement.</div></li>
             </ol>
           </div>
           <div class="sim-callbox">
@@ -205,7 +206,6 @@
             <li><a href="a-propos.html">&Agrave; propos</a></li>
             <li><a href="realisations.html">R&eacute;alisations</a></li>
             <li><a href="avis-clients.html">Avis clients</a></li>
-            <li><a href="simulateur-devis.html">Simulateur de devis</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="mentions-legales.html">Mentions l&eacute;gales</a></li>
           </ul>

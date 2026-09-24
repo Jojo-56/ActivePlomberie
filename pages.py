@@ -46,7 +46,7 @@ def page_index():
           <p class="lead">D&eacute;pannage, installations et r&eacute;novations de plomberie et chauffage dans toute la Haute-Savoie.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="{phone_href}">{phone_icon} Appeler maintenant</a>
-            <a class="btn btn-outline" href="simulateur-devis.html">Estimer mon devis en ligne</a>
+            <a class="btn btn-outline" href="{devis_href}">{devis_label}</a>
           </div>
           <div class="trust-row">
             <span class="item"><span class="icon-wrap">{doc}</span> Devis gratuit<br>et sans engagement</span>
@@ -147,7 +147,7 @@ def page_index():
         <div class="testi-grid">{testi_cards}</div>
       </div>
     </section>
-    """.format(
+    """.format(devis_href="simulateur-devis.html" if SIMULATEUR_PUBLIC else "contact.html", devis_label="Estimer mon devis en ligne" if SIMULATEUR_PUBLIC else "Demander un devis", 
         city=BIZ["city"], phone_href=BIZ["phone_href"], phone_icon=icon("icon-phone-white.svg"),
         clock=icon("icon-clock.svg"), doc=icon("icon-doc.svg"), badge=icon("icon-badge.svg"),
         stars=stars(), rating=BIZ["rating"], reviews=BIZ["reviews"], pin=icon("icon-pin.svg"),
@@ -255,13 +255,12 @@ def page_service(s):
           <div class="call-box">
             <p>Besoin d'un devis ou d'une intervention ?</p>
             <a href="{phone_href}">{phone}</a>
-            <a class="btn btn-outline-light btn-block" href="contact.html">Demander un devis gratuit</a>
-            <a class="btn btn-primary btn-block" href="simulateur-devis.html" style="margin-top:10px;">Estimer mon devis en ligne</a>
+            <a class="btn btn-outline-light btn-block" href="contact.html">Demander un devis gratuit</a>{simulateur_btn}
           </div>
         </aside>
       </div>
     </section>
-    """.format(title=s["title"], lead=s["hero_lead"], items=items_html, faq=faq_html,
+    """.format(simulateur_btn='\n            <a class="btn btn-primary btn-block" href="simulateur-devis.html" style="margin-top:10px;">Estimer mon devis en ligne</a>' if SIMULATEUR_PUBLIC else "", title=s["title"], lead=s["hero_lead"], items=items_html, faq=faq_html,
                photo=SERVICE_PHOTOS[s["slug"]][0], photo_alt=SERVICE_PHOTOS[s["slug"]][1],
                sidebar_links=sidebar_links, phone_href=BIZ["phone_href"], phone=BIZ["phone_display"])
     main += build_cta_banner()
@@ -617,7 +616,7 @@ def page_simulateur():
 
     main = build_page_header(
         "Simulateur de devis en ligne",
-        "Estimez gratuitement le prix de vos travaux de plomberie et chauffage en 2 minutes, puis envoyez vos photos pour recevoir un devis précis.",
+        "Estimez gratuitement le prix de vos travaux de plomberie et chauffage en 2 minutes, puis demandez votre devis précis à l'artisan.",
         [("Accueil", "index.html"), ("Simulateur de devis", None)]
     ) + """
     <section>
@@ -677,25 +676,19 @@ def page_simulateur():
               <div><strong>Prix estimatif, non contractuel.</strong> Cette fourchette est calculée automatiquement à partir de votre description.
               Le prix définitif sera établi et validé par Active Plomberie 74 dans un devis gratuit, après examen de vos photos et, si besoin, une visite sur place.</div>
             </div>
-            <p style="font-weight:700; color:var(--navy); margin-bottom:12px;">Envoyez 2 ou 3 photos pour que l'artisan affine votre devis&nbsp;:</p>
+            <p style="font-weight:700; color:var(--navy); margin-bottom:4px;">Vous souhaitez un devis précis&nbsp;?</p>
+            <p class="sim-sub" style="margin-bottom:14px;">Laissez vos coordonnées, Active Plomberie 74 vous recontacte. Vous pourrez aussi joindre des photos (facultatif).</p>
             <div class="sim-actions">
-              <button type="button" class="btn btn-primary" id="sim-affiner">Affiner mon devis avec des photos</button>
+              <button type="button" class="btn btn-primary" id="sim-affiner">Recevoir mon devis précis</button>
               <button type="button" class="btn btn-outline" id="sim-modifier">Modifier ma demande</button>
             </div>
           </div>
 
           <!-- Étape 3 : photos + coordonnées -->
           <div class="sim-step" data-step="contact" hidden>
-            <h2>Affinez votre devis</h2>
-            <p class="sim-sub">Ajoutez 2 ou 3 photos (vue d'ensemble, équipement actuel, zone de travaux) et vos coordonnées&nbsp;: Active Plomberie 74 vous recontacte avec un devis précis.</p>
+            <h2>Recevoir mon devis précis</h2>
+            <p class="sim-sub">Indiquez vos coordonnées&nbsp;: Active Plomberie 74 vous recontacte pour établir et valider votre devis. Les photos sont facultatives, mais elles aident l'artisan à être plus précis.</p>
             <form id="sim-contact" novalidate>
-              <div class="sim-drop" tabindex="0" role="button" aria-label="Ajouter des photos">
-                """ + icon("icon-doc.svg") + """
-                <strong>Ajouter des photos</strong>
-                <span>Jusqu'à 3 photos &middot; JPEG ou PNG &middot; depuis votre téléphone ou ordinateur</span>
-                <input type="file" id="sim-photos" accept="image/*" multiple>
-              </div>
-              <div class="sim-thumbs"></div>
               <div class="form-row">
                 <div class="field"><label for="sim-c-nom">Nom complet *</label><input type="text" id="sim-c-nom" autocomplete="name" required></div>
                 <div class="field"><label for="sim-c-tel">Téléphone *</label><input type="tel" id="sim-c-tel" autocomplete="tel" required></div>
@@ -706,6 +699,13 @@ def page_simulateur():
                 <div class="field"><label for="sim-c-ville">Ville</label><input type="text" id="sim-c-ville" autocomplete="address-level2"></div>
               </div>
               <div class="field"><label for="sim-c-message">Précisions (disponibilités, accès…)</label><textarea id="sim-c-message" maxlength="1500" style="min-height:80px;"></textarea></div>
+              <div class="sim-drop" tabindex="0" role="button" aria-label="Ajouter des photos">
+                """ + icon("icon-doc.svg") + """
+                <strong>Ajouter des photos <span style="font-weight:400; color:var(--muted);">(facultatif)</span></strong>
+                <span>Jusqu'à 3 photos (vue d'ensemble, équipement actuel…) &middot; JPEG ou PNG &middot; depuis votre téléphone ou ordinateur</span>
+                <input type="file" id="sim-photos" accept="image/*" multiple>
+              </div>
+              <div class="sim-thumbs"></div>
               <div class="sim-hp" aria-hidden="true"><label for="sim-c-website">Site web</label><input type="text" id="sim-c-website" tabindex="-1" autocomplete="off"></div>
               <label class="sim-check"><input type="checkbox" id="sim-c-ok"> <span>J'accepte d'être recontacté par Active Plomberie 74 au sujet de ma demande. Mes informations et photos sont transmises uniquement à l'artisan pour établir mon devis.</span></label>
               <div class="sim-error" id="sim-error-3" role="alert"></div>
@@ -720,7 +720,7 @@ def page_simulateur():
           <div class="sim-step sim-done" data-step="done" hidden>
             <span class="icon-wrap">""" + icon("icon-check-green.svg") + """</span>
             <h2>Demande envoyée&nbsp;!</h2>
-            <p>Merci, Active Plomberie 74 a bien reçu votre demande et vos photos. Vous serez recontacté rapidement pour valider votre devis.</p>
+            <p>Merci, Active Plomberie 74 a bien reçu votre demande. Vous serez recontacté rapidement pour valider votre devis.</p>
             <p>Pour une urgence, appelez directement le <a href=\"""" + BIZ["phone_href"] + """\"><strong>""" + BIZ["phone_display"] + """</strong></a>.</p>
           </div>
           <p class="sim-powered">Estimation calculée avec Alya, le logiciel de devis de votre artisan.</p>
@@ -732,7 +732,7 @@ def page_simulateur():
             <ol>
               <li><div><strong>Décrivez vos travaux</strong>Type d'intervention, équipement, dimensions&hellip;</div></li>
               <li><div><strong>Obtenez une fourchette de prix</strong>Estimation instantanée basée sur les tarifs de l'artisan.</div></li>
-              <li><div><strong>Envoyez 2 ou 3 photos</strong>L'artisan affine et valide votre devis, gratuitement.</div></li>
+              <li><div><strong>Demandez votre devis précis</strong>Laissez vos coordonnées (et des photos si vous le souhaitez)&nbsp;: l'artisan valide votre devis, gratuitement.</div></li>
             </ol>
           </div>
           <div class="sim-callbox">
@@ -751,6 +751,7 @@ def page_simulateur():
         description="Estimez gratuitement le prix de vos travaux de plomberie, chauffe-eau, chauffage ou salle de bain en Haute-Savoie, puis envoyez vos photos pour un devis précis.",
         path="simulateur-devis.html", main_html=main, active="services", active_service="simulateur",
         extra_head='\n  <link rel="stylesheet" href="css/simulateur.css">',
+        robots="index, follow" if SIMULATEUR_PUBLIC else "noindex, nofollow",
     )
 
 # =================================================================
@@ -816,7 +817,7 @@ def build_all():
     pages = ["index.html", "nos-services.html"] + [s["slug"] + ".html" for s in SERVICES] + \
         ["realisations.html", "avis-clients.html", "a-propos.html", "zones-intervention.html"] + \
         ["plombier-{}.html".format(commune_slug(c)) for c in COMMUNES] + \
-        ["simulateur-devis.html", "contact.html", "mentions-legales.html"]
+        (["simulateur-devis.html"] if SIMULATEUR_PUBLIC else []) + ["contact.html", "mentions-legales.html"]
     urls = ""
     for p in pages:
         loc = BIZ["domain"] + "/" + p
